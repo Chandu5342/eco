@@ -1,0 +1,98 @@
+* Role Mode Layout */ .role-mode-layout {
+    display: flex;
+    height: 100vh;
+    margin-top: 60px;
+    /* Prevents overlap with header */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: rgba(0, 100, 0, 0.8);
+    /* Same theme */
+    padding: 20px;
+    height: calc(100vh - 60px);
+    /* Full height except header */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 5rem;
+
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    display: block;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.sidebar {
+    width: 250px;
+    background: rgba(0, 100, 0, 0.8);
+    /* Same theme */
+    padding: 20px;
+    height: 100vh;
+    /* ✅ Changed from calc(100vh - 60px) to fully cover the page */
+    position: fixed;
+    /* ✅ Ensures it stays in place */
+    top: 0;
+    /* ✅ Starts from the top */
+    left: 0;
+}
+
+.sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+    color: black;
+    text-align: center;
+}
+
+/* Table Styling */
+.table-container {
+    margin-top: 46px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    width: 66%;
+    height: 22rem;
+    text-align: center;
+    margin-left: 23rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: darkgreen;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
