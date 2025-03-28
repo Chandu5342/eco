@@ -5,6 +5,7 @@ import Photo from "../images/photo.png"
 import Throw from "../images/throw.png"
 import Hurray from "../images/hurray.png"
 import Footer from "./Footer"
+import Walk from "../images/walk2.gif"
 
 function FristPage() {
    return(
