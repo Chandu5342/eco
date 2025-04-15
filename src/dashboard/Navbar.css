@@ -1,0 +1,91 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+/* Apply Background Image with Linear Gradient */
+
+.header-container
+{
+    margin-top: 1rem;
+}
+/* Header Styling - Blended with Background */
+header {
+    background-color: #eaf4e1;
+    /* Blends with body background */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 15px 0;
+}
+
+/* Floating Navigation Bar */
+.container {
+    width: 100%;
+   
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+/* Logo (EcoRecyclr stays on the left) */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Navigation */
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+    /* Moves nav items to the right */
+}
+
+.nav-list li {
+    display: inline;
+}
+
+/* Nav Links */
+.nav-list a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 16px;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover Effect */
+.nav-list a:hover {
+    color: #90EE90;
+    /* Light green hover effect */
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+        margin-left: 0;
+        /* Reset alignment in mobile view */
+    }
+}

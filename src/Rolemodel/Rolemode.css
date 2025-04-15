@@ -1,0 +1,199 @@
+.rolecontent {
+    background: linear-gradient(rgba(34, 139, 34, 0.7), rgba(0, 100, 0, 0.7)),
+        url('https://cdn.shopify.com/s/files/1/0582/6556/7255/files/img-bp-3-ways-eco-friendly-lifestyle-my-02-dt.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 60px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Layout Container */
+.role-mode-layout {
+    display: flex;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 2rem auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 1300px;
+    min-height: 80vh;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: rgba(0, 100, 0, 0.9);
+    padding: 20px;
+    height: auto;
+    position: relative;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 5rem;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    display: block;
+    color: white;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    color: black;
+    text-align: center;
+}
+.role-mode-layout h3{
+    color: black;
+}
+/* Table Styling */
+.table-container {
+    margin-top: 46px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    width: 66%;
+    height: 22rem;
+    text-align: center;
+    margin-left: 6rem;
+}
+
+table {
+    width: 100%;
+    color: black;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: darkgreen;
+   color: black;
+}
+
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.add-btn {
+    background-color: darkgreen;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.add-btn:hover {
+    background-color: green;
+}
+
+/* Overlay */
+.ssss {
+    position: fixed;    
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+}
+
+/* Popup Form */
+.popup-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    z-index: 11;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.popup-form input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.popup-buttons {
+    margin-top: 15px;
+}
+
+.popup-buttons button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 6px;
+    background-color: darkgreen;
+    color: white;
+    cursor: pointer;
+}
+
+.popup-buttons button:hover {
+    background-color: green;
+}
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.table-title {
+    text-align: center;
+    flex-grow: 1;
+    font-size: 22px;
+    font-weight: bold;
+    color: darkgreen;
+}

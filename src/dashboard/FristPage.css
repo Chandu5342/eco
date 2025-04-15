@@ -1,0 +1,264 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #eaf4e1;
+    color: black;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: #d8eacc;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.join-btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.hero {
+    position: relative;
+    background: url('https://source.unsplash.com/1600x900/?nature,recycling') center/cover no-repeat;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.hero h1 {
+    position: relative;
+    z-index: 2;
+}
+
+.section2 {
+    display: flex;
+    align-items: center;
+    background-color: #4caf50;
+    color: white;
+    padding: 50px;
+}
+
+.section2 .content {
+    flex: 1;
+    padding: 20px;
+}
+
+.section2 .content h2 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.section2 .content p {
+    font-size: 18px;
+}
+
+.section2 .image-container {
+    display: flex;
+    gap: 10px;
+}
+
+.section2 .image-container img {
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.section3 {
+    padding: 50px;
+    background-color: #f0f8eb;
+    text-align: left;
+}
+
+.section3 h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}
+
+.section3 p {
+    font-size: 18px;
+    color: #555;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+}
+
+.features-list li {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin: 15px 0;
+}
+
+.features-list li img {
+    width: 24px;
+    margin-right: 10px;
+}
+
+.image-container-section3 {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.image-container-section3 img {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+    .section4 {
+padding: 50px;
+background-color: #f0f8eb;
+text-align: center;
+}
+
+.testimonial {
+max-width: 800px;
+margin: auto;
+text-align: left;
+}
+
+.testimonial-image {
+width: 100%;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.testimonial p {
+font-size: 18px;
+margin-top: 15px;
+}
+
+.testimonial strong {
+display: block;
+margin-top: 10px;
+font-size: 16px;
+color: #333;
+}
+.section3 .sec{
+    display: flex;
+}
+.section4 .sec{
+    display: flex;
+}
+.section5 .sec{
+    display: flex;
+}
+.section3 .sec{
+    display: flex;
+}
+.section5{
+    background-color: #4CAF50; 
+    padding: 40px; 
+    text-align: center;
+}
+.section5  .sect{
+    width: 64rem;
+}
+.section5 h2{
+    color: white; font-size: 24px; margin-bottom: 20px;
+}
+.section5 .secm{
+    display: flex;
+     justify-content:center;
+     align-items: center;
+}
+.forms{
+    background: white; padding: 20px; border-radius: 10px; width: 702px;
+}
+.labem{
+    display: block; font-weight: bold; text-align: left;
+}
+#email,#message{
+    width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;
+}
+#contact{
+    width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;
+}
+.subbut{
+    background: #4CAF50; color: white; padding: 10px; border: none; width: 100%; border-radius: 5px; font-size: 16px;
+}
+footer{
+    background-color: #2E7D32; color: white; text-align: center; padding: 20px; font-size: 16px;
+}
+footer a{
+    color: white; text-decoration: none; margin: 0 10px;
+}
+.sec h1{
+    font-size: 4rem;
+}
+.par{
+    font-size: 2rem;
+}
+.hero-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/030/814/063/small_2x/wooden-table-and-blur-tropical-green-grass-background-product-display-montage-high-quality-8k-fhd-ai-generated-photo.jpg');
+    background-size: cover;  /* Ensures the image covers the entire div */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    width: 100%;
+    height: 100%;
+}
+
+.hero-item {
+    display: flex;
+    align-items: center;
+}   
+
+.hero-img {
+    width: 200px; /* Adjust size as needed */
+    height: 200px;
+}
+
+.arrow {
+    font-size: 24px;
+    margin: 0 10px;
+    color: black;
+}

@@ -1,0 +1,187 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.verification-container {
+    background-color: #000; /* fallback for gradient */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 50, 0, 0.4)), url('../images/VPP.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+
+    min-height: 100vh;
+    display: -ms-flexbox; /* IE10 */
+    -ms-flex-direction: column; /* IE10 */
+    -ms-align-items: center;
+    -ms-justify-content: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.vc {
+    padding: 2rem;
+    border-radius: 20px;
+
+    width: 100%;
+    max-width: 350px;
+
+    display: -ms-flexbox; /* IE10 */
+    -ms-flex-direction: column; /* IE10 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Replace flex gap with margins */
+.vc > *:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.heading {
+    font-size: 32px;
+    color: #FFEB3B;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.qr-input {
+    padding: 12px 20px;
+    border-radius: 20px;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    outline: none;
+}
+
+.scan-btn,
+.submit-btn {
+    width: 61%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+
+    margin-bottom: 15px;
+
+    /* Add vendor prefixes */
+    -webkit-box-shadow: 2px 2px 6px #000;
+    box-shadow: 2px 2px 6px #000;
+
+    -webkit-transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.scan-btn {
+    background-color: #00BFFF;
+}
+
+.scan-btn:hover {
+    background-color: #009ACD;
+    transform: scale(1.03);
+}
+
+.submit-btn {
+    background-color: orange;
+    margin-top: 18rem;
+}
+
+.submit-btn:hover {
+    background-color: darkorange;
+    transform: scale(1.03);
+}
+.scanner-box {
+    margin-top: 20px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}.modal-content {
+    background-color: #111;
+    color: #fff;
+    border: 2px solid #00BFFF;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+}
+
+.modal-content video {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.modal-content .scan-btn {
+    background-color: #00BFFF;
+    padding: 12px 24px;
+    font-size: 16px;
+    width: auto;
+    border-radius: 30px;
+    margin-top: 10px;
+}.upload-label {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-label:hover {
+    background-color: #218838;
+}
+
+

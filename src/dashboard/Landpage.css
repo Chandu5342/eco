@@ -1,0 +1,165 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+/* Apply Background Image with Linear Gradient */
+body {
+
+    background-size: cover;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Header Styling */
+header {
+    background: transparent;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 15px 0;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Navigation */
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 16px;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-list a:hover {
+    color: #90EE90;
+    transform: scale(1.1);
+}
+.header-container
+{
+    margin-top: 1rem;
+}
+/* Login Box */
+.login-container {
+    position: absolute;
+    top: 56%;
+
+    right: 5%;
+    transform: translateY(-50%);
+    width: 300px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 12rem;
+    height: 23rem;
+    
+    width: 20rem;
+        margin-top: -3rem;
+        margin-left: 25rem;
+}
+
+/* Login Form */
+.login-container h2 {
+    margin-bottom: 15px;
+    color: white;
+
+    margin-top: 3rem;
+
+
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-container button:hover {
+    background: #45a049;
+}
+
+/* Create Account Link */
+.create-account {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.create-account a {
+    color: #90EE90;
+    text-decoration: none;
+}
+
+.create-account a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .login-container {
+        position: relative;
+        right: 0;
+        top: auto;
+        transform: translate(0);
+        margin: 50px auto;
+    }
+}
