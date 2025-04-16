@@ -166,9 +166,9 @@ function VerificationP() {
                 console.log("Calculated distance:", distance);
     
                 if (distance <= 10) {
-                    alert(`Success! You're near the dustbin (${distance.toFixed(2)} meters away).`);
+                    alert(`Success! You're near the dustbin (${distance.toFixed(2)} meters away).userlat userlang${userLat}  ${userLng}dustbinlat dustbinlang ${dustbinLat}  ${dustbinLng}`);
                 } else {
-                    alert(`Too far from dustbin. You are ${distance.toFixed(2)} meters away.`);
+                    alert(`Too far from dustbin. You are ${distance.toFixed(2)} meters away.userlat userlang ${userLat}  ${userLng} dustbinlat dustbinlang ${dustbinLat}  ${dustbinLng}`);
                 }
             }, (error) => {
                 alert("Failed to get your location. Please allow GPS.");
