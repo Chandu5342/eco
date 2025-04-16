@@ -139,12 +139,8 @@ function VerificationP() {
             }
     
             const dustbinData = docSnap.data();
-            console.log("Dustbin data from Firestore:", dustbinData);
-    
             const dustbinLat = parseFloat(dustbinData.DustbinModel?.Latitude);
             const dustbinLng = parseFloat(dustbinData.DustbinModel?.Longitude);
-    
-            console.log("Dustbin coordinates (parsed):", dustbinLat, dustbinLng);
     
             if (isNaN(dustbinLat) || isNaN(dustbinLng)) {
                 alert("Invalid dustbin coordinates.");
@@ -156,29 +152,46 @@ function VerificationP() {
                 return;
             }
     
-            navigator.geolocation.getCurrentPosition((position) => {
-                const userLat = position.coords.latitude;
-                const userLng = position.coords.longitude;
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
     
-                console.log("User coordinates:", userLat, userLng);
+                    const distance = getDistanceFromLatLonInMeters(userLat, userLng, dustbinLat, dustbinLng);
     
-                const distance = getDistanceFromLatLonInMeters(userLat, userLng, dustbinLat, dustbinLng);
-                console.log("Calculated distance:", distance);
+                    console.log(`User Location: ${userLat}, ${userLng} (accuracy: ${accuracy} meters)`);
+                    console.log(`Dustbin Location: ${dustbinLat}, ${dustbinLng}`);
+                    console.log(`Distance to dustbin: ${distance} meters`);
     
-                if (distance <= 10) {
-                    alert(`Success! You're near the dustbin (${distance.toFixed(2)} meters away).userlat userlang${userLat}  ${userLng}dustbinlat dustbinlang ${dustbinLat}  ${dustbinLng}`);
-                } else {
-                    alert(`Too far from dustbin. You are ${distance.toFixed(2)} meters away.userlat userlang ${userLat}  ${userLng} dustbinlat dustbinlang ${dustbinLat}  ${dustbinLng}`);
+                    if (accuracy > 50) {
+                        alert(`GPS accuracy is low (${accuracy} meters). Try moving near a window or open area.`);
+                        return;
+                    }
+    
+                    if (distance <= 500) {
+                        alert(`✅ Success! You're near the dustbin.\nDistance: ${distance.toFixed(2)} meters\nAccuracy: ${accuracy.toFixed(2)} meters`);
+                    } else {
+                        alert(`❌ Too far from dustbin.\nDistance: ${distance.toFixed(2)} meters\nYour Location: ${userLat}, ${userLng}\nDustbin Location: ${dustbinLat}, ${dustbinLng}`);
+                    }
+                },
+                (error) => {
+                    alert("Failed to get your location. Please allow GPS.");
+                    console.error("Geolocation error:", error);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
                 }
-            }, (error) => {
-                alert("Failed to get your location. Please allow GPS.");
-            });
+            );
     
         } catch (error) {
             console.error("Error during verification:", error);
             alert("Something went wrong.");
         }
     };
+    
     
     
 
