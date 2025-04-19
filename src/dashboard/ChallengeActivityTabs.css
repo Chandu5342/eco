@@ -1,0 +1,54 @@
+.activity-tabs {
+    background-color: #08753b;
+    padding: 1.5rem;
+    border-radius: 20px;
+    margin-top: 1.5rem;
+    color: #fff;
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tabs button {
+    background-color: #065c2a;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .tabs button.active {
+    background-color: #16d66c;
+    color: #002b14;
+  }
+  
+  .challenge-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .challenge-item {
+    background-color: #06582a;
+    padding: 0.8rem;
+    border-radius: 10px;
+  }
+  
+  .challenge-title {
+    font-weight: bold;
+  }
+  
+  .challenge-meta {
+    font-size: 0.8rem;
+    color: #b6f7c1;
+  }
+  
+  .no-data {
+    color: #ddd;
+  }
+  

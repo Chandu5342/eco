@@ -57,14 +57,24 @@ function Dustbin() {
 
   const LoadDustbinList = async () => {
     const res = await getDocs(query(dbDustbin));
-    const DList = res.docs.map((doc) => ({
-      DustbinName: doc.data().DustbinModel.DustbinName,
-      Latitude: doc.data().DustbinModel.Latitude,
-      Longitude: doc.data().DustbinModel.Longitude,
-      Address: doc.data().DustbinModel.Address,
-      Id: doc.id,
-      QRCode: `https://api.qrserver.com/v1/create-qr-code/?data=${doc.id}&size=100x100`,
-    }));
+    const DList = res.docs
+      .map((doc) => {
+        const data = doc.data();
+        const model = data.DustbinModel;
+  
+        if (!model) return null; // skip if model is undefined
+  
+        return {
+          DustbinName: model.DustbinName,
+          Latitude: model.Latitude,
+          Longitude: model.Longitude,
+          Address: model.Address,
+          Id: doc.id,
+          QRCode: `https://api.qrserver.com/v1/create-qr-code/?data=${doc.id}&size=100x100`,
+        };
+      })
+      .filter((item) => item !== null); // remove any null entries
+  
     setDustbinList(DList);
   };
 

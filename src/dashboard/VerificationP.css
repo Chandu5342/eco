@@ -3,49 +3,40 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Container */
 .verification-container {
-    background-color: #000; /* fallback for gradient */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 50, 0, 0.4)), url('../images/VPP.jpg');
+    background-color: #000;
+    background-image: linear-gradient(rgba(78, 48, 48, 0.4), rgba(0, 50, 0, 0.4)), url('../images/VPP.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
-
     min-height: 100vh;
-    display: -ms-flexbox; /* IE10 */
-    -ms-flex-direction: column; /* IE10 */
-    -ms-align-items: center;
-    -ms-justify-content: center;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     padding: 20px;
     color: white;
     text-align: center;
 }
 
+/* Form Box */
 .vc {
     padding: 2rem;
     border-radius: 20px;
-
     width: 100%;
     max-width: 350px;
-
-    display: -ms-flexbox; /* IE10 */
-    -ms-flex-direction: column; /* IE10 */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Replace flex gap with margins */
 .vc > *:not(:last-child) {
     margin-bottom: 20px;
 }
 
+/* Heading */
 .heading {
     font-size: 32px;
     color: #FFEB3B;
@@ -53,6 +44,7 @@ body {
     text-shadow: 2px 2px 4px #000;
 }
 
+/* Inputs & Buttons */
 .qr-input {
     padding: 12px 20px;
     border-radius: 20px;
@@ -72,14 +64,8 @@ body {
     font-weight: bold;
     color: white;
     cursor: pointer;
-
     margin-bottom: 15px;
-
-    /* Add vendor prefixes */
-    -webkit-box-shadow: 2px 2px 6px #000;
     box-shadow: 2px 2px 6px #000;
-
-    -webkit-transition: transform 0.2s ease, background-color 0.2s ease;
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
@@ -101,6 +87,8 @@ body {
     background-color: darkorange;
     transform: scale(1.03);
 }
+
+/* Scanner Area */
 .scanner-box {
     margin-top: 20px;
     max-width: 400px;
@@ -109,8 +97,10 @@ body {
     border: 2px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
-  }
-  .modal-overlay {
+}
+
+/* Modal */
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -121,29 +111,15 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 999;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .modal-content {
-    background: white;
-    padding: 1rem;
-    border-radius: 12px;
-    text-align: center;
-    position: relative;
-}
-
-.close-btn {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: 20px;
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}.modal-content {
     background-color: #111;
     color: #fff;
     border: 2px solid #00BFFF;
@@ -152,6 +128,8 @@ body {
     width: 90%;
     max-width: 500px;
     box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+    text-align: center;
+    position: relative;
 }
 
 .modal-content video {
@@ -167,7 +145,24 @@ body {
     width: auto;
     border-radius: 30px;
     margin-top: 10px;
-}.upload-label {
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+/* Upload */
+.upload-label {
     display: inline-block;
     padding: 12px 24px;
     background-color: #28a745;
@@ -184,4 +179,127 @@ body {
     background-color: #218838;
 }
 
+/* Loader */
+.loader {
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top: 4px solid #00BFFF;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
 
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Alerts */
+.alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: bold;
+    margin: 10px auto;
+    width: fit-content;
+    animation: fadeIn 0.3s ease;
+}
+
+.alert-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.alert-failure {
+    background-color: #dc3545;
+    color: white;
+}
+
+.alert i {
+    font-size: 20px;
+}
+
+/* Confirmation Message */
+.confirmation-box {
+    margin-top: 20px;
+    padding: 15px 25px;
+    background-color: #222;
+    border: 2px solid limegreen;
+    color: lime;
+    font-weight: bold;
+    border-radius: 15px;
+    box-shadow: 0 0 15px limegreen;
+    animation: fadeIn 0.3s ease;
+}
+.overlay-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.loader-circle {
+    border: 6px solid #ddd;
+    border-top: 6px solid #00BFFF;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.success-popup .tick-mark {
+    font-size: 60px;
+    color: #28a745;
+    animation: pop 0.4s ease;
+    margin-bottom: 15px;
+}
+
+@keyframes pop {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.popup-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.next-btn, .cancel-btn, .try-again-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.next-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.try-again-btn {
+    background-color: #ff9800;
+    color: white;
+}

@@ -18,6 +18,8 @@ import FristPage from './dashboard/FristPage';
 import VerifyRecycling from './dashboard/Verification';
 import VerificationP from './dashboard/VerificationP';
 import QRScanner from './dashboard/Exam';
+import PhotoCapture from './dashboard/PhotoCapture';
+import Profile from './dashboard/Profile';
 
 
 function App() { 
@@ -29,10 +31,13 @@ function App() {
           <Route path='/dashboard/LandingPage' element={<Landingpage></Landingpage>}></Route>
           <Route path="/dashboard/Sign" element={<Sign />} />
           <Route path="/dashboard/web" element={<QRScanner />} />
-          <Route path="/dashboard/Verification" element={<VerifyRecycling/>}></Route>
+          <Route path="/a" element={<PhotoCapture />} />
+          <Route path="/dashboard/Verification/:challengeId/:userId" element={<VerificationP />} />
+
           <Route path="/dashboard/Challenges" element={<Challenges />} />
           <Route path="/Rolemodel/Rolemode" element={<Rolemode></Rolemode>} />
           <Route path="/dashboard/VerificationP" element={<VerificationP />} />
+          <Route path="/dashboard/Profile" element={<Profile />} />
          </Routes>
          
       </BrowserRouter>
