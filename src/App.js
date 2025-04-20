@@ -20,6 +20,7 @@ import VerificationP from './dashboard/VerificationP';
 import QRScanner from './dashboard/Exam';
 import PhotoCapture from './dashboard/PhotoCapture';
 import Profile from './dashboard/Profile';
+import VerifyChallenge from './dashboard/VerifyChallenge';
 
 
 function App() { 
@@ -31,9 +32,9 @@ function App() {
           <Route path='/dashboard/LandingPage' element={<Landingpage></Landingpage>}></Route>
           <Route path="/dashboard/Sign" element={<Sign />} />
           <Route path="/dashboard/web" element={<QRScanner />} />
-          <Route path="/a" element={<PhotoCapture />} />
+          <Route path="/a" element={<VerifyChallenge />} />
           <Route path="/dashboard/Verification/:challengeId/:userId" element={<VerificationP />} />
-
+       
           <Route path="/dashboard/Challenges" element={<Challenges />} />
           <Route path="/Rolemodel/Rolemode" element={<Rolemode></Rolemode>} />
           <Route path="/dashboard/VerificationP" element={<VerificationP />} />

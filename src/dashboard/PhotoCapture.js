@@ -1,17 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Webcam from 'react-webcam';
+import * as tf from '@tensorflow/tfjs';
+import '@tensorflow/tfjs-backend-webgl';
+import { getPredictedLabel } from '../utils/ImageValidator'; // ✅ path to your validator
 import { updateDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../Configuration';
 import './PhotoCapture.css';
 
+const classLabels = ['Plastic Cover', 'Bottles', 'Glass','E-waste','Metals']; // ✅ must match your model
+
 const PhotoCapture = ({ challengeId, userId, onComplete }) => {
     const webcamRef = useRef(null);
+    const imgRef = useRef(null); // ✅ for prediction
     const [imageSrc, setImageSrc] = useState(null);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [isError, setIsError] = useState(false);
     const [challengeModel, setChallengeModel] = useState(null);
+    const [model, setModel] = useState(null); // ✅ store model
+    const [predictedLabel, setPredictedLabel] = useState(''); // ✅ display result
 
     useEffect(() => {
         const fetchChallengeDetails = async () => {
@@ -24,7 +32,22 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
             }
         };
 
+        const loadModel = async () => {
+            try {
+                await tf.setBackend('webgl');
+                await tf.ready();
+                const loadedModel = await tf.loadLayersModel(
+                    'https://teachablemachine.withgoogle.com/models/4G-VYBnqa/model.json'
+                );
+                setModel(loadedModel);
+                console.log("✅ Model loaded");
+            } catch (err) {
+                console.error("❌ Model load error:", err);
+            }
+        };
+
         if (challengeId) fetchChallengeDetails();
+        loadModel();
     }, [challengeId]);
 
     const capture = () => {
@@ -47,42 +70,72 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
     };
 
     const handleSubmit = async () => {
-        if (!imageSrc || !challengeModel) {
-            alert('Please capture or upload an image first, or challenge data is missing.');
+        if (!imageSrc || !challengeModel || !model) {
+            alert('Please capture or upload an image first, or model/challenge data is missing.');
             return;
         }
-
+    
         setLoading(true);
         setShowSuccess(false);
-        setTimeout(async () => {
-            setLoading(false);
-            setShowSuccess(true);
-            try {
-                const userRewardRef = doc(db, 'UserRewards', `${userId}_${challengeId}`);
-                const userRewardSnap = await getDoc(userRewardRef);
-                let userRewardData = userRewardSnap.exists() ? userRewardSnap.data() : null;
-
-                let newProgress = userRewardData ? userRewardData.progress + 1 : 1;
-                let status = newProgress >= challengeModel.targetQuantity ? 'completed' : 'in-progress';
-                if (status === 'completed') newProgress = challengeModel.targetQuantity;
-
-                await setDoc(userRewardRef, {
-                    userId,
-                    challengeId,
-                    status,
-                    progress: newProgress,
-                    pointsAwarded: (newProgress / challengeModel.targetQuantity) * challengeModel.Point,
-                    dateStarted: userRewardData ? userRewardData.dateStarted : new Date().toISOString(),
-                    dateCompleted: status === 'completed' ? new Date().toISOString() : null,
-                });
-
-                onComplete();
-            } catch (error) {
-                console.error('Error updating user rewards:', error);
+        setIsError(false);
+    
+        // Wait for image to load into DOM before running prediction
+        await new Promise((resolve) => setTimeout(resolve, 500));
+    
+        try {
+            // Predict the label
+            const label = await getPredictedLabel(imgRef.current, model, classLabels);
+            setPredictedLabel(label);
+    
+            // Fetch the challenge type to get expected label
+            const typeRef = doc(db, 'ChallengeType', challengeModel.type);
+            const typeSnap = await getDoc(typeRef);
+            const expectedType = typeSnap.exists() ? typeSnap.data().ChallengeTypeModel.ChallengeTypeName : null;
+    
+            if (!expectedType) {
                 setIsError(true);
+                setLoading(false);
+                alert('Challenge type not found!');
+                return;
             }
-        }, 3000);
+    
+            // Validation: predicted label must match expected type
+            if (label.toLowerCase() !== expectedType.toLowerCase()) {
+                setIsError(true);
+                setLoading(false);
+                alert(`Invalid item! Expected: ${expectedType}, but got: ${label}`);
+                return;
+            }
+    
+            // Proceed with reward logic
+            const userRewardRef = doc(db, 'UserRewards', `${userId}_${challengeId}`);
+            const userRewardSnap = await getDoc(userRewardRef);
+            const userRewardData = userRewardSnap.exists() ? userRewardSnap.data() : null;
+    
+            let newProgress = userRewardData ? userRewardData.progress + 1 : 1;
+            let status = newProgress >= parseInt(challengeModel.targetQuantity) ? 'completed' : 'in-progress';
+            if (status === 'completed') newProgress = parseInt(challengeModel.targetQuantity);
+    
+            await setDoc(userRewardRef, {
+                userId,
+                challengeId,
+                status,
+                progress: newProgress,
+                pointsAwarded: (newProgress / parseInt(challengeModel.targetQuantity)) * parseInt(challengeModel.points),
+                dateStarted: userRewardData ? userRewardData.dateStarted : new Date().toISOString(),
+                dateCompleted: status === 'completed' ? new Date().toISOString() : null,
+            });
+    
+            setShowSuccess(true);
+            onComplete();
+        } catch (error) {
+            console.error('Error during submission:', error);
+            setIsError(true);
+        }
+    
+        setLoading(false);
     };
+    
 
     return (
         <div className="photo-capture-container">
@@ -113,7 +166,20 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
             )}
 
             {imageSrc && (
-                <img src={imageSrc} alt="Captured" className="qr-image-preview" />
+                <>
+                    <img
+                        src={imageSrc}
+                        alt="Captured"
+                        ref={imgRef} // ✅ bind for prediction
+                        className="qr-image-preview"
+                        crossOrigin="anonymous"
+                    />
+                    {predictedLabel && (
+                        <p style={{ marginTop: '10px', textAlign: 'center' }}>
+                            🔍 Predicted: <strong>{predictedLabel}</strong>
+                        </p>
+                    )}
+                </>
             )}
 
             {loading && (
@@ -124,13 +190,13 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
 
             {showSuccess && (
                 <div className="success-popup">
-                    <p>Photo submitted successfully!</p>
+                    <p>✅ Photo submitted successfully!</p>
                 </div>
             )}
 
             {isError && (
                 <div className="error-popup">
-                    <p>Error uploading photo. Try again.</p>
+                    <p>❌ Error uploading photo. Try again.</p>
                 </div>
             )}
         </div>
