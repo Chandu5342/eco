@@ -6,6 +6,7 @@ import jsQR from 'jsqr';
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../Configuration";
 import PhotoCapture from './PhotoCapture';
+import UploadVerifier from './UploadVerifier ';
 
 function VerificationP() {
     const { challengeId, userId } = useParams(); // Get challengeId and userId from URL params
@@ -15,13 +16,14 @@ function VerificationP() {
     const [showSuccess, setShowSuccess] = useState(false);
     const [isError, setIsError] = useState(false);
     const [step, setStep] = useState('verify');
+    const [imf, setimf] = useState(0);
     const webcamRef = useRef(null);
     const videoConstraints = {
         width: 500,
         height: 500,
         facingMode: "environment"
     };
-
+  
     useEffect(() => {
         console.log(`Challenge ID: ${challengeId}, User ID: ${userId}`);
     }, [challengeId, userId]);
@@ -160,26 +162,31 @@ function VerificationP() {
                 return;
             }
 
-            navigator.geolocation.getCurrentPosition((position) => {
-                const userLat = position.coords.latitude;
-                const userLng = position.coords.longitude;
+        // Keep everything same except this line for extra feedback during geolocation error
+navigator.geolocation.getCurrentPosition(
+    (position) => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
 
-                const distance = getDistanceInMeters(userLat, userLng, dustbinLat, dustbinLng);
+        const distance = getDistanceInMeters(userLat, userLng, dustbinLat, dustbinLng);
 
-                setLoading(false);
+        setLoading(false);
 
-                if (distance <= 500) { // 500 meters distance range
-                    setIsError(false);
-                    setShowSuccess(true);
-                } else {
-                    setIsError(true);
-                    setShowSuccess(true);
-                }
-                
-            }, () => {
-                setLoading(false);
-                alert("Unable to retrieve your location.");
-            });
+        if (distance <= 500) {
+            setIsError(false);
+            setShowSuccess(true);
+        } else {
+            setIsError(true);
+            setShowSuccess(true);
+        }
+    },
+    (error) => {
+        setLoading(false);
+        alert("Unable to retrieve your location. Please ensure GPS is enabled and try again.");
+        console.error("Geolocation Error: ", error);
+    }
+);
+
 
         } catch (error) {
             console.error("Error verifying location:", error);
@@ -207,11 +214,32 @@ function VerificationP() {
     };
 
     if (step === 'photo') {
-        return <PhotoCapture onBack={() => setStep('verify')} onSubmit={handlePhotoSubmit} userId={userId} challengeId={challengeId} />;
+         return (
+            <PhotoCapture
+              onBack={() => setStep('verify')}
+              onSubmit={handlePhotoSubmit}
+              userId={userId}
+              challengeId={challengeId}
+              onComplete={() => console.log("✅ Photo capture complete!")} // <-- ADD THIS
+            />
+          );
+          
+        
     }
 
+    if(imf===1)
+    {
+        return(
+                        <UploadVerifier
+            userId={userId}
+            challengeId={challengeId}
+            binId={scanResult}
+            />
+        )
+    }
     return (
         <div className="verification-container">
+            <button onClick={()=>{setimf(1)}}>tesginioooooooo</button>
             <div className="vc">
                 <h1 className="heading">RECYCLING CHALLENGE</h1>
                 <input
@@ -234,23 +262,28 @@ function VerificationP() {
                 </div>
             )}
 
-            {showSuccess && (
-                <div className="overlay-popup success-popup">
-                    <div className="tick-mark">{isError ? "❌" : "✔"}</div>
-                    <p>{isError ? "Too far from dustbin!" : "Success!"}</p>
-
-                    <div className="popup-buttons">
-                        {isError ? (
-                            <button className="try-again-btn" onClick={() => setShowSuccess(false)}>Try Again</button>
-                        ) : (
-                            <>
-                                <button className="next-btn" onClick={() => setStep('photo')}>Next</button>
-                                <button className="cancel-btn" onClick={() => setShowSuccess(false)}>Cancel</button>
-                            </>
-                        )}
-                    </div>
+{showSuccess && (
+    <div className={`toast-rectangle ${isError ? 'error' : 'success'}`}>
+        <div className="toast-content">
+            <div className="icon">{isError ? "❌" : "✔"}</div>
+            <div className="message">
+                <p>{isError ? "Too far from dustbin!" : "Success!"}</p>
+                <div className="toast-buttons">
+                    {isError ? (
+                        <button onClick={() => setShowSuccess(false)}>Try Again</button>
+                    ) : (
+                        <>
+                            <button onClick={() => setStep('photo')}>Next</button>
+                            <button onClick={() => setShowSuccess(false)}>Cancel</button>
+                        </>
+                    )}
                 </div>
-            )}
+            </div>
+        </div>
+    </div>
+)}
+
+
 
             {showScanner && (
                 <div className="modal-overlay">

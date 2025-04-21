@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f9ff;
+    color: #222;
+  }
+  
+  .hiw-container {
+   
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f4f9ff;
+  }
+  
+  .hiw-title {
+    font-size: 42px;
+    margin-bottom: 10px;
+    color: #1c2e4a;
+  }
+  
+  .hiw-description {
+    font-size: 18px;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  
+  .hiw-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .hiw-step {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+  }
+  
+  .hiw-step:hover {
+    transform: translateY(-6px);
+  }
+  
+  .hiw-step img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    margin-bottom: 20px;
+  }
+  
+  .hiw-step-title {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #1c2e4a;
+  }
+  
+  .hiw-step-desc {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .hiw-why {
+    margin-top: 40px;
+  }
+  
+  .hiw-why h2 {
+    font-size: 26px;
+    color: #1c2e4a;
+    margin-bottom: 10px;
+  }
+  
+  .hiw-why p {
+    font-size: 17px;
+    color: #444;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+  
+  .hiw-btn {
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #0c6e48;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .hiw-btn:hover {
+    background-color: #088157;
+  }
+  

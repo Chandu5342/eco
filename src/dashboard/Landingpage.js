@@ -1,26 +1,24 @@
-
 import Navbar from "./Navbar";
 import React, { useState } from "react";
 import "./Landpage.css";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../Configuration";
-import { Link, useNavigate } from "react-router-dom";  // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import recycle from '../images/re1.png';
 
 function Landingpage() {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const navigate = useNavigate();  // Use useNavigate instead of useHistory
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, Email, Password);
       toast.success("Login Successfully", { position: 'top-center' });
-
-      // Redirect to Challenges page using navigate
-      setInterval(() => {
-        navigate("/dashboard/Challenges");  // Use navigate instead of history.push
+      setTimeout(() => {
+        navigate("/dashboard/Challenges");
       }, 1000);
     } catch (error) {
       console.log(error.message);
@@ -30,8 +28,15 @@ function Landingpage() {
 
   return (
     <>
-      <div className="main">
+       <div className="wrapper"> {/* Entire full-height container */}
+      <div className="left-pane">
         <Navbar />
+        <div className="image-wrapper">
+          <img src={recycle} alt="Recycle Reward" />
+        </div>
+      </div>
+
+      <div className="right-pane">
         <div className="login-container">
           <h2>Login</h2>
           <form onSubmit={handleSubmit} method="POST">
@@ -56,9 +61,9 @@ function Landingpage() {
           </form>
         </div>
       </div>
+    </div>
     </>
   );
 }
 
 export default Landingpage;
-

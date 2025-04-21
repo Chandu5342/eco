@@ -14,6 +14,7 @@ function Challenges() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("All");
   const [selectedType, setSelectedType] = useState("All");
+  const [teMap, setteMap] = useState({});
 
   // Fetch challenge types and map type ID to name
   const fetchChallengeTypes = async () => {
@@ -21,10 +22,14 @@ function Challenges() {
       const typeQuery = query(collection(db, "ChallengeType"));
       const typeSnapshot = await getDocs(typeQuery);
       const map = {};
+      const tmap = {};
       typeSnapshot.forEach((doc) => {
         map[doc.id] = doc.data().ChallengeTypeModel.ChallengeTypeName;
+        tmap[doc.id]=doc.data().ChallengeTypeModel.ImgUrl;
+        console.log("ChallengeTypeModel",tmap[doc.id])
       });
       setTypeMap(map);
+      setteMap(tmap);
     } catch (error) {
       toast.error("Error fetching challenge types.", { position: "top-center" });
     }
@@ -72,6 +77,7 @@ function Challenges() {
       await fetchChallengeTypes();
       await fetchChallenges();
       await fetchUserChallenges();
+    
     };
     loadAll();
   }, []);
@@ -106,70 +112,83 @@ function Challenges() {
           <button className="role-mode-btn">Role Mode</button>
         </Link>
       </div>
+{/* NEW HEADER SECTION */}
+<div className="header-section">
+  <div className="container-box">
+    <h1 className="title re">Recycling Challenges</h1>
 
-      <div className="challengesarea">
-        <div className="makeup"></div>
+    {/* Tabs */}
+    <div className="tabs-container">
+      {["All", "Completed", "In Progress", "Not Attempted"].map((tab) => (
+        <button
+          key={tab}
+          className={`tab-btn ${activeTab === tab ? "active" : ""}`}
+          onClick={() => setActiveTab(tab)}
+        >
+          {tab}
+        </button>
+      ))}
+    </div>
 
-        <div className="filters-container" style={{ display: "flex", justifyContent: "space-between", margin: "20px" }}>
-          <div className="tabs">
-            {["All", "Completed", "In Progress", "Not Attempted"].map((tab) => (
-              <button
-                key={tab}
-                className={`tab-button ${activeTab === tab ? "active" : ""}`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+    {/* Filter Dropdown */}
+    <div className="dropdown-container">
+      <select
+        className="type-dropdown"
+        value={selectedType}
+        onChange={(e) => setSelectedType(e.target.value)}
+      >
+        <option value="All">All Types</option>
+        {Object.values(typeMap).map((typeName, index) => (
+          <option key={index} value={typeName}>
+            {typeName}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
+</div>
 
-          <div className="dropdown">
-            <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-              <option value="All">All Types</option>
-              {Object.values(typeMap).map((typeName, index) => (
-                <option key={index} value={typeName}>
-                  {typeName}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+{/* CHALLENGE CARDS SECTION */}
+<div className="challenges-body">
+  <h2 className="section-title">Your Challenges</h2>
 
-        <div className="challenges-container">
-          <h2 style={{ color: "white", textAlign: "center" }}>Your Challenges</h2>
+  {loading ? (
+    <p className="loading">Loading...</p>
+  ) : (
+    <div className="card-grid">
+      {filteredChallenges.map((item) => {
+        const userProgress = userChallenges.find(
+          (userChallenge) => userChallenge.challengeId === item.Id
+        );
 
-          {loading ? (
-            <p style={{ color: "white", textAlign: "center" }}>Loading...</p>
-          ) : (
-            filteredChallenges.map((item) => {
-              const userProgress = userChallenges.find(
-                (userChallenge) => userChallenge.challengeId === item.Id
-              );
+        const typeName = typeMap[item.Type] || "Unknown Type";
+        const userProgressCount = userProgress
+          ? parseInt(userProgress.progress)
+          : 0;
+          console.log("filteredChallenges",teMap);
+          let url=teMap[item.Type];
+        return (
+          
+          <Card
+          key={item.Id}
+          name={item.ChallengeName}
+          Type={typeName}
+          Point={item.Point}
+          progress={userProgress ? userProgress.status : "Not Attempted"}
+          challengeId={item.Id}
+          userId={auth.currentUser.uid}
+          targetQuantity={item.TargetQuantity}
+          userProgress={userProgressCount} 
+          image={`${url}`}// <-- Use the direct URL here
+        />
+                   
+           
 
-              console.log(`User progress for ${item.ChallengeName}:`, userProgress); // Debug
-
-              const typeName = typeMap[item.Type] || "Unknown Type";
-              const userProgressCount = userProgress ? parseInt(userProgress.progress) : 0;
-
-              return (
-                <Card
-                  key={item.Id}
-                  name={item.ChallengeName}
-                  Type={typeName}
-                  Point={item.Point}
-                  progress={userProgress ? userProgress.status : "Not Attempted"}
-                  challengeId={item.Id} // Pass challengeId as prop
-                  userId={auth.currentUser.uid} // Pass userId as prop
-                  targetQuantity={item.TargetQuantity} // Pass targetQuantity as prop
-                  userProgress={userProgressCount} // Pass user progress as prop
-                />
-              );
-            })
-          )}
-        </div>
-      </div>
-      <br />
-      <br />
+        );
+      })}
+    </div>
+  )}
+</div>
     </>
   );
 }

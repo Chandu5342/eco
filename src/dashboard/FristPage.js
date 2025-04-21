@@ -88,17 +88,17 @@ function FristPage() {
         <div className="secm" >
             <form className="forms">
             <label for="email"  className="labem" >Your Email</label>
-                <input type="email" id="email" name="email" 
+                <input type="email" id="email" name="email" placeholder="enter email"
                     
                     required />
     
                 <label for="contact"  className="labem" >Contact Number</label>
-                <input type="text" id="contact" name="contact"
+                <input type="text" id="contact" name="contact" placeholder="enter number"
                    
                     required />
     
                 <label for="message" className="labem" >Your Message</label>
-                <textarea id="message" name="message" rows="4"
+                <textarea id="message" name="message" rows="4" placeholder="enter message"
                     
                     required></textarea>
     

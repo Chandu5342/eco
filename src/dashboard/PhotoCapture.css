@@ -120,27 +120,83 @@
     background-color: #218838;
   }
   
-  .loading-popup {
+  .loading{
     position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
-    padding: 10px;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     z-index: 10;
-  }
-  .loading-spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid orange;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
+  .loading-s {
+    border: 8px solid #f3f3f3; /* Light gray background */
+    border-top: 8px solid #ff5722; /* Bright color for the spinning section */
+    border-radius: 50%;
+    width: 60px; /* Increased size for better visibility */
+    height: 60px;
+    animation: spin 1.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+    /* Popup Common */
+.success-popup,
+.error-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.25);
+  padding: 25px 20px;
+  text-align: center;
+  z-index: 999;
+  animation: popIn 0.3s ease-out;
+}
+@keyframes popIn {
+  from { transform: scale(0.7) translate(-50%, -50%); opacity: 0; }
+  to { transform: scale(1) translate(-50%, -50%); opacity: 1; }
+}
+
+.success-popup p,
+.error-popup p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.home-btn,
+.try-again-btn,
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+}
+.home-btn:hover {
+  background-color: #007bff;
+}
+.try-again-btn:hover {
+  background-color: #28a745;
+}
+.cancel-btn:hover {
+  background-color: #dc3545;
+}

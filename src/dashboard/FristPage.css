@@ -16,6 +16,7 @@ body {
 .logo {
     font-size: 24px;
     font-weight: bold;
+    color: black;
 }
 
 .nav-links {
@@ -45,17 +46,17 @@ body {
 }
 
 .hero {
-    position: relative;
-    background: url('https://source.unsplash.com/1600x900/?nature,recycling') center/cover no-repeat;
-    height: 70vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-    font-size: 36px;
-    font-weight: bold;
-    padding: 20px;
+        position: relative;
+        background: url('https://source.unsplash.com/1600x900/?nature,recycling') center/cover no-repeat;
+        height: 70vh;
+        display: flex;
+        justify-content: center;    
+        align-items: center;
+        text-align: center;
+        color: white;
+        font-size: 36px;
+        font-weight: bold;
+        padding: 20px;
 }
 
 .overlay {
@@ -109,6 +110,7 @@ body {
     padding: 50px;
     background-color: #f0f8eb;
     text-align: left;
+    color: black;
 }
 
 .section3 h2 {
@@ -154,6 +156,7 @@ body {
 padding: 50px;
 background-color: #f0f8eb;
 text-align: center;
+color: black;
 }
 
 .testimonial {
@@ -239,22 +242,24 @@ footer a{
     justify-content: center;
     align-items: center;
     gap: 20px;
-    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/030/814/063/small_2x/wooden-table-and-blur-tropical-green-grass-background-product-display-montage-high-quality-8k-fhd-ai-generated-photo.jpg');
+   
+    background: url('../images/bck.jpg') center/cover no-repeat;
     background-size: cover;  /* Ensures the image covers the entire div */
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents repeating */
     width: 100%;
-    height: 100%;
+    height: 100%;   
 }
 
 .hero-item {
     display: flex;
     align-items: center;
+    margin-top: 11rem;
 }   
 
 .hero-img {
-    width: 200px; /* Adjust size as needed */
-    height: 200px;
+    width: 220px; /* Adjust size as needed */
+    height: 220px;
 }
 
 .arrow {
