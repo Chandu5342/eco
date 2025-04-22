@@ -1,27 +1,32 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import * as tf from '@tensorflow/tfjs';
 import '@tensorflow/tfjs-backend-webgl';
-import { getPredictedLabel } from '../utils/ImageValidator'; // ✅ path to your validator
-import { updateDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getPredictedLabel } from '../utils/ImageValidator';
+import { updateDoc, doc, getDoc, setDoc, collection, query, where, getDocs, addDoc } from 'firebase/firestore';
+import { getStorage, ref as storageRef, uploadString, getDownloadURL } from 'firebase/storage';
 import { db } from '../Configuration';
+import blockhash from 'blockhash-core';
 import './PhotoCapture.css';
+import { Link } from 'react-router-dom';
 
-const classLabels = ['Plastic Cover', 'Bottles', 'Glass','E-waste','Metals']; // ✅ must match your model
+const classLabels = ['Plastic Cover', 'Bottles', 'Glass', 'E-waste', 'Metals'];
 
 const PhotoCapture = ({ challengeId, userId, onComplete }) => {
     const webcamRef = useRef(null);
-    const imgRef = useRef(null); // ✅ for prediction
+    const imgRef = useRef(null);
     const [imageSrc, setImageSrc] = useState(null);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [isError, setIsError] = useState(false);
     const [challengeModel, setChallengeModel] = useState(null);
-    const [model, setModel] = useState(null); // ✅ store model
-    const [predictedLabel, setPredictedLabel] = useState(''); // ✅ display result
-    const [expectedType, setExpectedType] = useState(''); // store expected type for validation
-    const [challengeItem, setChallengeItem] = useState(''); // store challenge item for display
+    const [model, setModel] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [predictedLabel, setPredictedLabel] = useState('');
+    const [expectedType, setExpectedType] = useState('');
+    const [challengeItem, setChallengeItem] = useState('');
 
     useEffect(() => {
         const fetchChallengeDetails = async () => {
@@ -31,7 +36,7 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
                 if (challengeSnap.exists()) {
                     const data = challengeSnap.data();
                     setChallengeModel(data);
-                    setChallengeItem(data.name); // assuming 'name' contains challenge item
+                    setChallengeItem(data.name);
                 }
             } catch (error) {
                 console.error("Error fetching challenge details:", error);
@@ -75,6 +80,37 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
         reader.readAsDataURL(file);
     };
 
+    const getRotatedHashes = async (imgElement) => {
+        const hashes = [];
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const size = 256;
+        canvas.width = canvas.height = size;
+        const angles = [0, 90, 180, 270];
+
+        for (let angle of angles) {
+            ctx.clearRect(0, 0, size, size);
+            ctx.save();
+            ctx.translate(size / 2, size / 2);
+            ctx.rotate((angle * Math.PI) / 180);
+            ctx.drawImage(imgElement, -size / 2, -size / 2, size, size);
+            ctx.restore();
+
+            const imageData = ctx.getImageData(0, 0, size, size);
+            const hash = await blockhash.bmvbhash(imageData, 16);
+            hashes.push(hash);
+        }
+        return hashes;
+    };
+
+    const hammingDistance = (hash1, hash2) => {
+        let dist = 0;
+        for (let i = 0; i < hash1.length; i++) {
+            if (hash1[i] !== hash2[i]) dist++;
+        }
+        return dist;
+    };
+
     const handleSubmit = async () => {
         if (!imageSrc || !challengeModel || !model) {
             alert('Please capture or upload an image first, or model/challenge data is missing.');
@@ -85,15 +121,12 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
         setShowSuccess(false);
         setIsError(false);
 
-        // Wait for image to load into DOM before running prediction
         await new Promise((resolve) => setTimeout(resolve, 500));
 
         try {
-            // Predict the label
             const label = await getPredictedLabel(imgRef.current, model, classLabels);
             setPredictedLabel(label);
 
-            // Fetch the challenge type to get expected label
             const typeRef = doc(db, 'ChallengeType', challengeModel.type);
             const typeSnap = await getDoc(typeRef);
             const expectedTypeData = typeSnap.exists() ? typeSnap.data().ChallengeTypeModel.ChallengeTypeName : null;
@@ -106,16 +139,52 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
                 return;
             }
 
-            // Validation: predicted label must match expected type
-            if (label.trim().toLowerCase() !== expectedTypeData.trim().toLowerCase())
-                {
+            if (label.trim().toLowerCase() !== expectedTypeData.trim().toLowerCase()) {
                 setIsError(true);
+                setErrorMessage(`Invalid item! Expected: ${expectedTypeData}, but got: ${label}`);
+
                 setLoading(false);
-                alert(`Invalid item! Expected: ${expectedTypeData}, but got: ${label}`);
                 return;
             }
 
-            // Proceed with reward logic
+            const newHashes = await getRotatedHashes(imgRef.current);
+
+            const hashesQuery = query(
+                collection(db, 'ImageHashes'),
+                where('userId', '==', userId),
+                where('challengeId', '==', challengeId)
+            );
+
+            const existingSnapshots = await getDocs(hashesQuery);
+            let isDuplicate = false;
+
+            existingSnapshots.forEach(doc => {
+                const oldHashes = doc.data().hashes || [];
+                newHashes.forEach(newHash => {
+                    oldHashes.forEach(oldHash => {
+                        const dist = hammingDistance(newHash, oldHash);
+                        if (dist <= 20) {
+                            isDuplicate = true;
+                        }
+                    });
+                });
+            });
+
+            if (isDuplicate) {
+                setIsError(true);
+                setErrorMessage("🚫 Duplicate image detected! Try a different photo.");
+
+                setLoading(false);
+                return;
+            }
+
+            await addDoc(collection(db, 'ImageHashes'), {
+                userId,
+                challengeId,
+                hashes: newHashes,
+                timestamp: new Date().toISOString(),
+            });
+
             const userRewardRef = doc(db, 'UserRewards', `${userId}_${challengeId}`);
             const userRewardSnap = await getDoc(userRewardRef);
             const userRewardData = userRewardSnap.exists() ? userRewardSnap.data() : null;
@@ -154,7 +223,8 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
 
     return (
         <div className="photo-capture-container">
-            <div className="qr-button" onClick={() => setIsCameraOpen(true)}></div>
+             <button className='upload-btn' onClick={() => setIsCameraOpen(true)}>Upload Image</button>
+            {/* <div className="qr-button" onClick={() => setIsCameraOpen(true)}></div> */}
             <button className="submit-button" onClick={handleSubmit}>Submit Photo</button>
 
             {isCameraOpen && (
@@ -167,7 +237,7 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
                     />
                     <div className="photo-options">
                         <button onClick={capture} className="capture-btn">Take Photo</button>
-                        <label className="upload-btn">
+                        <label className="uploads-btn">
                             Upload Image
                             <input
                                 type="file"
@@ -182,10 +252,11 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
 
             {imageSrc && (
                 <>
+                
                     <img
                         src={imageSrc}
                         alt="Captured"
-                        ref={imgRef} // ✅ bind for prediction
+                        ref={imgRef}
                         className="qr-image-preview"
                         crossOrigin="anonymous"
                     />
@@ -211,26 +282,28 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
                     <p>✅ Photo submitted successfully!</p>
                     <p>Challenge: <strong>{challengeItem}</strong></p>
                     <p>Predicted: <strong>{predictedLabel}</strong></p>
-                    <button onClick={closePopup} className="home-btn">Home</button>
+                    <a  href='/' className="home-btn">Home</a>
                     <button onClick={closePopup} className="cancel-btn">Cancel</button>
                 </div>
             )}
 
-{isError && (
-  <div className="error-popup" style={{ width: '320px', height: 'auto' }}>
-    <p style={{ fontWeight: 'bold', color: '#dc3545', fontSize: '16px' }}>
-      ❌ Invalid item!
-    </p>
-    <p>
-      Expected: <strong>{expectedType}</strong>, but got: <strong>{predictedLabel}</strong>
-    </p>
-    <div style={{ marginTop: '12px' }}>
-      <button onClick={closePopup} className="home-btn">Home</button>
-      <button onClick={handleSubmit} className="try-again-btn">Try Again</button>
-      <button onClick={closePopup} className="cancel-btn">Cancel</button>
-    </div>
-  </div>
-)}
+            {isError && (
+                <div className="error-popup" style={{ width: '320px', height: 'auto' }}>
+                    <p style={{ fontWeight: 'bold', color: '#dc3545', fontSize: '16px' }}>
+                        ❌ {errorMessage}
+                    </p>
+                    {(expectedType && predictedLabel && errorMessage.includes("Expected")) && (
+                        <p>
+                            Expected: <strong>{expectedType}</strong>, but got: <strong>{predictedLabel}</strong>
+                        </p>
+                    )}
+                    <div style={{ marginTop: '12px' }}>
+                           <a  href='/' className="home-btn">Home</a>
+                        <button onClick={closePopup} className="try-again-btn">Try Again</button>
+                        <button onClick={closePopup} className="cancel-btn">Cancel</button>
+                    </div>
+                </div>
+            )}
 
         </div>
     );

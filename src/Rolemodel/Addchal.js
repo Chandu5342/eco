@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { addDoc, collection, getDocs, query } from "firebase/firestore";
+import { addDoc, collection, getDocs,deleteDoc,doc, query } from "firebase/firestore";
 import { auth, db } from "../Configuration";
 import { toast } from "react-toastify";
+import './Addchal.css';
 
 function Addchal() {
     const [showForm, setShowForm] = useState(false);
@@ -10,19 +11,19 @@ function Addchal() {
     const [showChallengeTypePopup, setShowChallengeTypePopup] = useState(false);
     const [ChallengeTypes, setChallengeTypes] = useState([]);
     const [ChallengeTypeMap, setChallengeTypeMap] = useState({});
-        const [ChallengeModel, setChallengeModel] = useState({
-            Id: "0",
-            ChallengeName: "",
-            TypeId: "", // Store the ChallengeTypeId here
-            Point: 0,
-            CreatedBy: "",
-            Description: "",
-            TargetQuantity: 0,
-        });
-
+    const [ChallengeModel, setChallengeModel] = useState({
+        Id: "0",
+        ChallengeName: "",
+        TypeId: "", // Store the ChallengeTypeId here
+        Point: 0,
+        CreatedBy: "",
+        Description: "",
+        TargetQuantity: 0,
+    });
+    const [showdelete, Setshowdelete] = useState(false);
     const dbChallenge = collection(db, "Challenges");
     const dbChallengeType = collection(db, "ChallengeType");
-
+    const [deleteId, setDeleteId] = useState(null);
     const handleFormToggle = () => {
         setShowForm(!showForm);
     };
@@ -105,11 +106,29 @@ function Addchal() {
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            await deleteDoc(doc(db, "Challenges", deleteId));
+            Setshowdelete(false);
+            toast.success("Deleted Successfully", { position: "top-center" });
+            LoadChallengesList();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         fetchUserData();
         LoadChallengesList();
         fetchChallengeTypes();
     }, []);
+    useEffect(() => {
+        if (showForm || showChallengeTypePopup) {
+            document.body.classList.add("modal-open");
+        } else {
+            document.body.classList.remove("modal-open");
+        }
+    }, [showForm, showChallengeTypePopup]);
 
     return (
         <>
@@ -133,6 +152,7 @@ function Addchal() {
                             <th>Points</th>
                             <th>Target Quantity</th>
                             <th>Description</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,6 +171,9 @@ function Addchal() {
                                 <td>{item.Point}</td>
                                 <td>{item.TargetQuantity}</td>
                                 <td>{item.Description}</td>
+                                <td>
+                                <i className="fa-solid fa-trash" style={{ cursor: "pointer", color: "red", marginLeft: "10px" }} onClick={() => { setDeleteId(item.Id); Setshowdelete(true); }}></i>
+                               </td>
                             </tr>
                         ))}
                     </tbody>
@@ -159,11 +182,12 @@ function Addchal() {
 
             {showForm && (
                 <div className="popup-form">
-                    <h3>Add New Challenge</h3>
+                    <img src="/path-to-your-mascot-image.png" alt="Plant Mascot" className="plant-mascot" />
+                    <h3>Add New Recycling Challenge</h3>
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
-                            placeholder="Enter Challenge Name"
+                            placeholder="Challenge Name"
                             required
                             value={ChallengeModel.ChallengeName}
                             onChange={(e) =>
@@ -173,52 +197,8 @@ function Addchal() {
                                 })
                             }
                         />
-                        <div className="challenge-type-container">
-                            <select
-                                required
-                                value={ChallengeModel.TypeId}
-                                onChange={(e) =>
-                                    setChallengeModel({ ...ChallengeModel, TypeId: e.target.value })
-                                }
-                            >
-                                <option value="">Select Challenge Type</option>
-                                {ChallengeTypes.map((type, index) => (
-                                    <option key={index} value={type.id}>
-                                        {type.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <button
-                                type="button"
-                                className="add-challenge-type-btn"
-                                onClick={() => setShowChallengeTypePopup(true)}
-                            >
-                                <span className="add-icon">+</span> Add
-                            </button>
-                        </div>
-                        <input
-                            type="number"
-                            placeholder="Enter Points"
-                            required
-                            value={ChallengeModel.Point}
-                            onChange={(e) =>
-                                setChallengeModel({ ...ChallengeModel, Point: e.target.value })
-                            }
-                        />
-                        <input
-                            type="number"
-                            placeholder="Target Quantity (e.g., 5 items)"
-                            required
-                            value={ChallengeModel.TargetQuantity}
-                            onChange={(e) =>
-                                setChallengeModel({
-                                    ...ChallengeModel,
-                                    TargetQuantity: e.target.value,
-                                })
-                            }
-                        />
                         <textarea
-                            placeholder="Enter Challenge Description"
+                            placeholder="Description"
                             required
                             value={ChallengeModel.Description}
                             onChange={(e) =>
@@ -228,8 +208,40 @@ function Addchal() {
                                 })
                             }
                         />
+                        <select
+                            required
+                            value={ChallengeModel.TypeId}
+                            onChange={(e) =>
+                                setChallengeModel({ ...ChallengeModel, TypeId: e.target.value })
+                            }
+                        >
+                            <option value="">Select category</option>
+                            {ChallengeTypes.map((type, index) => (
+                                <option key={index} value={type.id}>
+                                    {type.name}
+                                </option>
+                            ))}
+                        </select>
+                        <input
+                            type="number"
+                            placeholder="Reward Points"
+                            required
+                            value={ChallengeModel.Point}
+                            onChange={(e) =>
+                                setChallengeModel({ ...ChallengeModel, Point: e.target.value })
+                            }
+                        />
+                        <input
+                            type="number"
+                            placeholder="Target Quantity (e.g., 5)"
+                            required
+                            value={ChallengeModel.TargetQuantity}
+                            onChange={(e) =>
+                                setChallengeModel({ ...ChallengeModel, TargetQuantity: e.target.value })
+                            }
+                        />
                         <div className="popup-buttons">
-                            <button type="submit">Submit</button>
+                            <button type="submit">Add Challenge</button>
                             <button type="button" onClick={handleFormToggle}>
                                 Cancel
                             </button>
@@ -237,6 +249,7 @@ function Addchal() {
                     </form>
                 </div>
             )}
+
 
             {/* Challenge Type Popup */}
             {showChallengeTypePopup && (
@@ -259,6 +272,20 @@ function Addchal() {
                             </button>
                         </div>
                     </form>
+                </div>
+            )}
+
+
+            {showdelete && (
+                <div className="popup-overlay">
+                    <div className="popup-form">
+                        <h2>Confirm Delete</h2>
+                        <p>Are you sure you want to delete this problem?</p>
+                        <div className="popup-buttons">
+                            <button className="delete-btn" onClick={handleDelete}>Delete</button>
+                            <button className="cancel-btn" onClick={() => Setshowdelete(false)}>Cancel</button>
+                        </div>
+                    </div>
                 </div>
             )}
         </>

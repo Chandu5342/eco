@@ -227,19 +227,19 @@ navigator.geolocation.getCurrentPosition(
         
     }
 
-    if(imf===1)
-    {
-        return(
-                        <UploadVerifier
-            userId={userId}
-            challengeId={challengeId}
-            binId={scanResult}
-            />
-        )
-    }
+    // if(imf===1)
+    // {
+    //     return(
+    //                     <UploadVerifier
+    //         userId={userId}
+    //         challengeId={challengeId}
+    //         binId={scanResult}
+    //         />
+    //     )
+    // }
     return (
         <div className="verification-container">
-            <button onClick={()=>{setimf(1)}}>tesginioooooooo</button>
+         
             <div className="vc">
                 <h1 className="heading">RECYCLING CHALLENGE</h1>
                 <input

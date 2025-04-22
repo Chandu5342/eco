@@ -30,6 +30,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+   
+    position: fixed;
 }
 
 .vc > *:not(:last-child) {
@@ -82,7 +84,7 @@ body {
 
 .submit-btn {
     background-color: orange;
-    margin-top: 20.8rem;
+    margin-top: 18.5rem;
 }
 
 .submit-btn:hover {

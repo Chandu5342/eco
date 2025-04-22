@@ -8,6 +8,7 @@
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
+    text-align: center;
     overflow: hidden;
   }
   
@@ -30,9 +31,10 @@
   
   .submit-button {
     position: absolute;
-    top: 88%;
-    width: 15%;
-    left: 52%;
+    top: 88.8%;
+    width: 13%;
+    left: 51.5%;
+    height: 3rem;
     transform: translate(-50%, -50%);
     padding: 12px 24px;
     background-color: orange;
@@ -50,7 +52,7 @@
   }
   .photo-popup {
     position: absolute;
-    top: 50%; /* middle of the screen */
+    top: 37%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
@@ -74,7 +76,7 @@
     gap: 10px;
   }
   
-  .upload-btn {
+  .uploads-btn {
     background-color: #eee;
     padding: 6px;
     border-radius: 5px;
@@ -96,8 +98,8 @@
   }
   .qr-image-preview {
     position: absolute;
-    top: 50%;   /* Center vertically */
-    left: 50%;  /* Center horizontally */
+    top: 63%;
+    left: 51%;
     transform: translate(-50%, -50%);
     width: 21%;
     height: 28%;
@@ -156,7 +158,7 @@
 .success-popup,
 .error-popup {
   position: fixed;
-  top: 50%;
+  top: 31%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: #ffffff;
@@ -165,6 +167,7 @@
   padding: 25px 20px;
   text-align: center;
   z-index: 999;
+  color: white;
   animation: popIn 0.3s ease-out;
 }
 @keyframes popIn {
@@ -199,4 +202,21 @@
 }
 .cancel-btn:hover {
   background-color: #dc3545;
+}
+.upload-btn{
+
+  margin-top: 11rem;
+  width: 10rem;
+ background-color: green;
+
+  padding: 15px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 15px;
+  box-shadow: 2px 2px 6px #000;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }

@@ -1,0 +1,254 @@
+/* Global container */
+.reward-container {
+    padding: 40px 20px;
+    /* display: flex
+; */
+    text-align: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(rgba(34, 139, 34, 0.8), rgba(0, 100, 0, 0.8)), url(http://localhost:3000/static/media/rolebg.af2861b….png) no-repeat center center fixed;
+    background-size: cover;
+    align-items: center;
+  }
+  
+ /* Navbar styling override */
+.navbar {
+    width: 100%;
+    background: transparent !important;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    color:black !important;
+  }
+  
+  .navbar * {
+    
+  }
+  
+  .navbar a,
+  .navbar a:visited,
+  .navbar a:active {
+   
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar a:hover {
+   
+  }
+  
+  /* Main card */
+  .reward-card {
+    background-color: rgba(240, 249, 229, 0.95);
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 800px;
+    margin-left: 15rem;
+    margin-top: 100px;
+  }
+  
+  /* Header */
+  .reward-header {
+       /* display: flex
+; */
+justify-content: space-between;
+text-align: center;
+align-items: center;
+margin-bottom: 30px;
+  }
+  
+  .reward-header h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1b3b2f;
+  }
+  
+  .reward-icon {
+    font-size: 32px;
+  }
+  
+  /* Tabs */
+  .reward-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .reward-tabs button {
+    background-color: #e0f2d8;
+    border: 2px solid transparent;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1b3b2f;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .reward-tabs button:hover {
+    background-color: #d2ecc4;
+  }
+  
+  .reward-tabs .active-tab {
+    background-color: #69c07d;
+    color: white;
+    border: 2px solid #4ba163;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Dropdown filter */
+  .reward-dropdown-container {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  
+  .reward-dropdown {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 16px;
+    border: 2px solid #4ba163;
+    background-color: #fff;
+    color: #1b3b2f;
+    cursor: pointer;
+  }
+  
+  /* Challenge list */
+  .reward-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .reward-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 15px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    color: #1b3b2f;
+  }
+  
+  .emoji {
+    font-size: 24px;
+  }
+  
+  .reward-details {
+    flex: 1;
+    margin-left: 15px;
+    text-align: left;
+  }
+  
+  .title {
+    font-size: 22px;
+    /* font-weight: 800; */
+    font-weight: bold;
+    color: #1b3b2f;
+  }
+  
+  .points {
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+    pointer:hand;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+ 
+  .reward-status {
+    text-align: right;
+  }
+  
+  /* Status badges */
+  .status {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 15px;
+    display: inline-block;
+  }
+  
+  .status.completed {
+    background-color: #d1fadf;
+    color: #1a7f3f;
+  }
+  
+  .status.in-progress {
+    background-color: #fff5cc;
+    color: #a67c00;
+  }
+  
+  .status.expired {
+    background-color: #fcdede;
+    color: #b10000;
+  }
+  
+  .status.not-attempted {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .date {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+  }
+  
+  /* Trophy section */
+  .reward-shelf {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 15px;
+    font-size: 24px;
+  }
+  
+  /* Leaderboard button */
+  .leaderboard-button-wrapper {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .leaderboard-button {
+    padding: 10px 30px;
+    background-color: #69c07d;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .leaderboard-button:hover {
+    background-color: #57a46b;
+  }
+  .progress-bar-container {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    height: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  /* Fill of the progress bar */
+  .progress-bar-fill {
+    background-color: #69c07d;
+    height: 100%;
+    transition: width 0.4s ease;
+  }

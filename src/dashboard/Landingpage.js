@@ -30,7 +30,7 @@ function Landingpage() {
     <>
        <div className="wrapper"> {/* Entire full-height container */}
       <div className="left-pane">
-        <Navbar />
+       
         <div className="image-wrapper">
           <img src={recycle} alt="Recycle Reward" />
         </div>

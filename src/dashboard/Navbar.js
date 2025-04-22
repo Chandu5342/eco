@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
+import { auth ,db} from "../Configuration";
+import { doc,getDoc } from "firebase/firestore";
 import './Navbar.css'; // assuming you have styles here
 
 function Navbar() {
@@ -8,15 +10,28 @@ function Navbar() {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
-
+  async function Logout()
+  {
+  console.log("hello");
+    try{
+       await auth.signOut();
+       console.log("User Logout Successfully");
+       window.location.href="/";
+      
+    }
+    catch(error)
+    {
+         console.log("error.message");
+    }
+  }
   return (
     <div className="container header-container">
       <h1 className="logo">EcoRecyclr</h1>
       <nav>
         <ul className="nav-list">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Challenges</a></li>
-          <li><a href="#">Rewards</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="//dashboard/challenges">Challenges</a></li>
+          <li><a href="/dashboard/rewards">Rewards</a></li>
           <li><a href="/dashboard/HIW">How It Works</a></li>
           <li><a href="#">Contact</a></li>
           <div className="profile-dropdown">
@@ -24,7 +39,7 @@ function Navbar() {
             {showDropdown && (
               <div className="dropdown-menu">
                 <a href="/dashboard/Profile">My Profile</a>
-                <a href="/logout">Logout</a>
+                <a onClick={Logout}>Logout</a>
               </div>
             )}
           </div>

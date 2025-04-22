@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #eaf4e1;
+  
     color: black;
 }
 
@@ -267,3 +267,86 @@ footer a{
     margin: 0 10px;
     color: black;
 }
+.eco-footer {
+    background-color: #1c1c1e;
+    color: #fff;
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .footer-logo {
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-logo h2 {
+    font-size: 28px;
+    color: #00ffb3;
+    margin-bottom: 10px;
+  }
+  
+  .footer-logo p {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .social-icons a {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    color: #00ffb3;
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .footer-links h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #00ffb3;
+  }
+  
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links ul li {
+    margin-bottom: 8px;
+  }
+  
+  .footer-links ul li a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links ul li a:hover {
+    color: #00ffb3;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #aaa;
+  }
+  

@@ -37,7 +37,7 @@ function Sign() {
         <>
             <div className="wrapper"> {/* Consistent layout */}
                 <div className="left-pane">
-                    <Navbar />
+                    
                     <div className="image-wrapper">
                         <img src={recycle} alt="Recycle Reward" />
                     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addDoc, collection, getDocs, query } from "firebase/firestore";
+import { addDoc, collection, getDocs,deleteDoc,doc, query } from "firebase/firestore";
 import { auth, db } from "../Configuration";
 import { toast } from "react-toastify";
 import { QRCodeCanvas } from "qrcode.react";
@@ -13,7 +13,8 @@ function Dustbin() {
   const [UserId, setUserId] = useState("0");
   const [pdfPreview, setPdfPreview] = useState("");
   const [showPdfPreview, setShowPdfPreview] = useState(false);
-
+    const [deleteId, setDeleteId] = useState(null);
+        const [showdelete, Setshowdelete] = useState(false);
   const [DustbinModel, setDustbinModel] = useState({
     Id: "0",
     DustbinName: "",
@@ -162,7 +163,16 @@ function Dustbin() {
 
     doc.save("All_Dustbin_QR_Codes.pdf");
   };
-
+  const handleDelete = async () => {
+        try {
+            await deleteDoc(doc(db, "Dustbins", deleteId));
+            Setshowdelete(false);
+            toast.success("Deleted Successfully", { position: "top-center" });
+            LoadDustbinList();
+        } catch (error) {
+            console.log(error);
+        }
+    };
   useEffect(() => {
     fetchUserData();
     LoadDustbinList();
@@ -192,6 +202,7 @@ function Dustbin() {
               <th>Longitude</th>
               <th>Address</th>
               <th>QR Code</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -207,6 +218,9 @@ function Dustbin() {
                     <i className="eye-icon">👁️</i>
                   </button>
                 </td>
+                <td>
+                                <i className="fa-solid fa-trash" style={{ cursor: "pointer", color: "red", marginLeft: "10px" }} onClick={() => { setDeleteId(item.Id); Setshowdelete(true); }}></i>
+                               </td>
               </tr>
             ))}
           </tbody>
@@ -290,6 +304,19 @@ function Dustbin() {
           </form>
         </div>
       )}
+
+{showdelete && (
+                <div className="popup-overlay">
+                    <div className="popup-form">
+                        <h2>Confirm Delete</h2>
+                        <p>Are you sure you want to delete this problem?</p>
+                        <div className="popup-buttons">
+                            <button className="delete-btn" onClick={handleDelete}>Delete</button>
+                            <button className="cancel-btn" onClick={() => Setshowdelete(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
     </>
   );
 }

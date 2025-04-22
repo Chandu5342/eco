@@ -1,0 +1,180 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+  }
+  
+  /* Backdrop overlay */
+  .ssss {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+  }
+  
+  /* Table container styling */
+  .table-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    padding: 24px;
+  }
+  
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  
+  .add-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .table-title {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  
+  th,
+  td {
+    padding: 12px 16px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f1f1f1;
+    font-weight: 600;
+  }
+  
+  .popup-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: #fffef5;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    max-width: 90%;
+    font-family: 'Inter', sans-serif;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .popup-form h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1f3c2f;
+    margin-bottom: 1.2rem;
+  }
+  
+  .popup-form input,
+  .popup-form select,
+  .popup-form textarea {
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 0.8rem;
+    border: 2px solid #cfcfcf;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: #fffdf5;
+  }
+  
+  .popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .popup-buttons button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .popup-buttons button[type="submit"] {
+    background-color: #f7a900;
+    color: white;
+  }
+  
+  .popup-buttons button[type="button"] {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  /* Mascot image in popup */
+  .plant-mascot {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 80px;
+  }
+  
+  /* Challenge Type button */
+  .add-challenge-type-btn {
+    background-color: #28a745;
+    color: white;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: 600;
+  }
+  
+  .add-challenge-type-btn:hover {
+    background-color: #218838;
+  }
+  
+  .challenge-type-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* Animation for popup */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -60%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+  

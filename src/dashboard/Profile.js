@@ -3,6 +3,7 @@ import "./Profile.css"; // Move styles from <style> into this file
 import ChallengeActivityTabs from "./ChallengeActivityTabs";
 import { auth, db } from '../Configuration';
 import { getDoc, setDoc, doc, getDocs, collection, query, where } from 'firebase/firestore';
+import Navbar from "./Navbar";
 
 const Profile = () => {
     const [ChallengeTypeModel, setChallengeTypeModel] = useState([{
@@ -198,6 +199,7 @@ const Profile = () => {
 
     return (
         <>
+        <Navbar></Navbar>
             <div className="dashboard">
                 <div className="left-panel">
                     <div className="avatar"></div>
@@ -211,7 +213,8 @@ const Profile = () => {
 
                     <div className="profile-links">
                         <p>PROFILE</p>
-                        <p>PROFILE</p>
+                        <span>{UserModel.UserName}</span><br></br>
+                        <span>{UserModel.email}</span>
                     </div>
 
                     <div className="icon-info">

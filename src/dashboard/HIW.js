@@ -1,9 +1,9 @@
 import React from 'react';
 import './HIW.css';
-import hw1 from '../images/hw-1.png';
-import hw2 from '../images/hw-2.png';
-import hw3 from '../images/hw-1.png';
-import hw4 from '../images/hw-2.png';
+import hw1 from '../images/hw-3.png';
+import hw2 from '../images/loc.png';
+import hw3 from '../images/v3.png';
+import hw4 from '../images/hw-1.png';
 import Navbar from './Navbar';
 
 const HIW = () => {
@@ -55,7 +55,7 @@ const HIW = () => {
           Recycling helps reduce waste and protect the environment. With our app, your actions are verified and rewarded
           to encourage better habits. Let’s make an impact together!
         </p>
-        <button className="hiw-btn">Start a Challenge</button>
+        <a href='/dashboard/challenges'><button className="hiw-btn">Start a Challenge</button></a>
       </div>
     </div>
     </>
