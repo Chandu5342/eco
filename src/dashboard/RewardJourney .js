@@ -5,15 +5,28 @@ import { db, auth } from "../Configuration";
 import { getDocs, query, collection, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { Link,useNavigate } from 'react-router-dom'
+import glass from '../images/glass.png';
+import plastic from '../images/bag.png';
+import Metals from '../images/metal.png';
+import Bottles from '../images/bottle.png'
+import Loader from "../Loader";
 
 const RewardJourney = () => {
     const [ChallengeList, setChallengeList] = useState([]);
     const [userChallenges, setUserChallenges] = useState([]);
     const [typeMap, setTypeMap] = useState({});
+     const [loading, setLoading] = useState(true); 
     const [teMap, setteMap] = useState({});
     const [activeTab, setActiveTab] = useState("All");
     const [selectedType, setSelectedType] = useState("All");
     const navigate = useNavigate();  
+    const imageMap = {
+        glass,
+        plastic,
+        metals: Metals,
+        bottles: Bottles,
+        'plastic cover': plastic, // if you want to reuse the plastic image
+      };
     useEffect(() => {
         const loadAll = async () => {
             await fetchChallengeTypes();
@@ -72,6 +85,7 @@ const RewardJourney = () => {
         } catch (error) {
             toast.error("Error fetching user progress.");
         }
+        setLoading(false);
     };
 
     const filteredChallenges = ChallengeList.filter((challenge) => {
@@ -135,6 +149,7 @@ const RewardJourney = () => {
 
                     {/* Filtered Challenge Cards */}
                     <div className="reward-list">
+                        
                         {filteredChallenges.map((item) => {
                             const userProgress = userChallenges.find(
                                 (uc) => uc.challengeId === item.Id
@@ -144,15 +159,26 @@ const RewardJourney = () => {
                                 : "Not Attempted";
                             const emoji = progressStatus === "Completed"
                                 ? "✅"
-                                : progressStatus === "In Progress"
+                                : progressStatus === "in-Progress"
                                     ? "🕒"
                                     : progressStatus === "Expired"
                                         ? "❌"
                                         : "🧩";
+                            const typeName = typeMap[item.Type] || "Unknown Type";
+                            const icon = progressStatus === "Completed"
+                                ? "✅"
+                                : progressStatus === "in-Progress"
+                                    ? "🕒"
+                                    : progressStatus === "Expired"
+                                        ? "❌"
+                                        : "🧩";
+                                //let url=teMap[typeName];
+                                //console.log(url,"url");
 
                             return (
                                 <div key={item.Id} className="reward-item">
-                                    <div className="emoji">{emoji}</div>
+                                  <img className="emoji" src={imageMap[typeName.toLowerCase()]} alt={`${item.ChallengeName} icon`} />
+                                    {/* <div className="emoji">{emoji}</div> */}
                                     <div className="reward-details">
                                         <h2>{`${item.ChallengeName}(${item.Point} pts)`}</h2>
                                         {/* <div className="title">{item.ChallengeName}</div> */}
@@ -211,7 +237,9 @@ const RewardJourney = () => {
                         <div className="trophy">🎖️</div>
                         <div className="trophy">🎗️</div>
                     </div>
-
+                    {loading && (
+                             <Loader></Loader>
+                        )}
 
                 </div>
             </div>

@@ -1,54 +1,158 @@
-.activity-tabs {
-    background-color: #08753b;
-    padding: 1.5rem;
-    border-radius: 20px;
-    margin-top: 1.5rem;
-    color: #fff;
-  }
-  
-  .tabs {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .tabs button {
-    background-color: #065c2a;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .tabs button.active {
-    background-color: #16d66c;
-    color: #002b14;
-  }
-  
-  .challenge-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-  
-  .challenge-item {
-    background-color: #06582a;
-    padding: 0.8rem;
-    border-radius: 10px;
-  }
-  
-  .challenge-title {
-    font-weight: bold;
-  }
-  
-  .challenge-meta {
-    font-size: 0.8rem;
-    color: #b6f7c1;
-  }
-  
-  .no-data {
-    color: #ddd;
-  }
-  
+/* Container setup */
+.challengeTabs-container {
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #065c2a;
+}
+
+/* Header Tabs */
+.challengeTabs-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.challengeTabs-tab {
+  padding: 0.6rem 1.2rem;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 2rem;
+  color: black;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.challengeTabs-tab.isActive {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* Dropdown Filter */
+.challengeTabs-dropdown {
+  margin-bottom: 2rem;
+}
+
+.challengeTabs-select {
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 1rem;
+}
+
+/* Card List */
+.challengeTabs-list {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  color: black;
+}
+
+/* Card */
+.challengeTabs-card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.challengeTabs-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Icon */
+.challengeTabs-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  align-self: center;
+  margin-bottom: 1rem;
+}
+
+/* Card Details */
+.challengeTabs-details {
+  text-align: center;
+}
+
+.challengeTabs-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+/* Get Challenge Button */
+.challengeTabs-actionBtn {
+  background-color: #4caf50;
+ color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.challengeTabs-actionBtn:hover {
+  background-color: #45a049;
+}
+
+/* Progress */
+.challengeTabs-progress {
+  margin-bottom: 1rem;
+}
+
+.challengeTabs-progressText {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.challengeTabs-progressBar {
+  background-color: #e0e0e0;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.challengeTabs-progressFill {
+  background-color: #4caf50;
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+/* Meta Info */
+.challengeTabs-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.challengeTabs-status {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.challengeTabs-status.completed {
+  color: #2e7d32;
+}
+
+.challengeTabs-status.in-progress {
+  color: #f9a825;
+}
+
+.challengeTabs-status.expired {
+  color: #d32f2f;
+}
+
+.challengeTabs-target {
+  color: #757575;
+}

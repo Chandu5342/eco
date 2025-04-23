@@ -9,7 +9,8 @@ body {
    
     padding: 40px 20px;
     text-align: center;
-    background-color: #f4f9ff;
+    background: linear-gradient(rgba(34, 139, 34, 0.8), rgba(0, 100, 0, 0.8)), url(http://localhost:3000/static/media/rolebg.af2861b….png) no-repeat center center fixed;
+
   }
   
   .hiw-title {

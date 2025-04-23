@@ -3,112 +3,121 @@ import "./ChallengeActivityTabs.css";
 import { db, auth } from "../Configuration";
 import { getDocs, query, collection, where } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import glass from "../images/glass.png";
+import plastic from "../images/bag.png";
+import Metals from "../images/metal.png";
+import Bottles from "../images/bottle.png";
 
 const ChallengeActivityTabs = () => {
-  const [challenges, setChallenges] = useState([]);
+  const [challengeList, setChallengeList] = useState([]);
   const [userChallenges, setUserChallenges] = useState([]);
   const [typeMap, setTypeMap] = useState({});
-  const [selectedType, setSelectedType] = useState("All");
+  const [imageUrlMap, setImageUrlMap] = useState({});
   const [activeTab, setActiveTab] = useState("All");
-  const [loading, setLoading] = useState(true);
+  const [selectedType, setSelectedType] = useState("All");
+  const navigate = useNavigate();
 
-  // Fetch challenge types
+  const imageMap = {
+    glass,
+    plastic,
+    metals: Metals,
+    bottles: Bottles,
+    "plastic cover": plastic,
+  };
+
+  useEffect(() => {
+    const loadAll = async () => {
+      await fetchChallengeTypes();
+      await fetchChallenges();
+      await fetchUserChallenges();
+    };
+    loadAll();
+  }, []);
+
   const fetchChallengeTypes = async () => {
     try {
       const typeSnapshot = await getDocs(collection(db, "ChallengeType"));
       const map = {};
+      const imgMap = {};
       typeSnapshot.forEach((doc) => {
         map[doc.id] = doc.data().ChallengeTypeModel.ChallengeTypeName;
+        imgMap[doc.id] = doc.data().ChallengeTypeModel.ImgUrl;
       });
       setTypeMap(map);
+      setImageUrlMap(imgMap);
     } catch (error) {
       toast.error("Error fetching challenge types.");
     }
   };
 
-  // Fetch all challenges
   const fetchChallenges = async () => {
     try {
       const challengeSnapshot = await getDocs(collection(db, "Challenges"));
-      const data = challengeSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        name: doc.data().name,
-        type: doc.data().type,
-        points: doc.data().points,
-        targetQuantity: parseInt(doc.data().targetQuantity),
+      const challenges = challengeSnapshot.docs.map((doc) => ({
+        Id: doc.id,
+        ChallengeName: doc.data().name,
+        Type: doc.data().type,
+        Point: doc.data().points,
+        TargetQuantity: parseInt(doc.data().targetQuantity),
       }));
-      setChallenges(data);
+      setChallengeList(challenges);
     } catch (error) {
       toast.error("Error fetching challenges.");
     }
   };
 
-  // Fetch user-specific challenge progress
-  const fetchUserProgress = async () => {
+  const fetchUserChallenges = async () => {
     try {
-      const userId = auth.currentUser?.uid;
-      if (!userId) return;
-
-      const userSnapshot = await getDocs(
+      const userId = auth.currentUser.uid;
+      const userChallengeSnapshot = await getDocs(
         query(collection(db, "UserRewards"), where("userId", "==", userId))
       );
-      const userData = userSnapshot.docs.map((doc) => doc.data());
-      setUserChallenges(userData);
+      const data = userChallengeSnapshot.docs.map((doc) => doc.data());
+      setUserChallenges(data);
     } catch (error) {
       toast.error("Error fetching user progress.");
-    } finally {
-      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    const load = async () => {
-      await fetchChallengeTypes();
-      await fetchChallenges();
-      await fetchUserProgress();
-    };
-    load();
-  }, []);
+  const filteredChallenges = challengeList.filter((challenge) => {
+    const userProgress = userChallenges.find(
+      (uc) => uc.challengeId === challenge.Id
+    );
+    const status = userProgress ? userProgress.status : "Not Attempted";
+    const normalizedStatus = status.toLowerCase().replace(/\s+/g, "-");
+    const normalizedTab = activeTab.toLowerCase().replace(/\s+/g, "-");
+    const matchesTab = normalizedTab === "all" || normalizedStatus === normalizedTab;
+    const matchesType =
+      selectedType === "All" || typeMap[challenge.Type] === selectedType;
+    return matchesTab && matchesType;
+  });
 
-  // Merge and filter
-  const filteredChallenges = challenges
-    .map((challenge) => {
-      const userProgress = userChallenges.find(
-        (uc) => uc.challengeId === challenge.id
-      );
-      const status = userProgress?.status || "Not Attempted";
-
-      return {
-        ...challenge,
-        status,
-        daysAgo: userProgress?.lastUpdated || "N/A",
-      };
-    })
-    .filter((challenge) => {
-      const matchesTab =
-        activeTab === "All" || challenge.status === activeTab;
-      const matchesType =
-        selectedType === "All" ||
-        typeMap[challenge.type] === selectedType;
-      return matchesTab && matchesType;
-    });
+  const handleGetChallenge = (cid, uid) => {
+    navigate(`/dashboard/Verification/${cid}/${uid}`);
+  };
 
   return (
-    <div className="activity-tabs">
-      <div className="tabs">
-        {["All", "Completed", "In Progress", "Not Attempted"].map((tab) => (
-          <button
-            key={tab}
-            className={activeTab === tab ? "active" : ""}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
+    <div className="challengeTabs-container">
+      <div className="challengeTabs-header">
+        {["All", "Completed", "In Progress", "Not Attempted", "Expired"].map(
+          (tab) => (
+            <button
+              key={tab}
+              className={`challengeTabs-tab ${
+                activeTab === tab ? "isActive" : ""
+              }`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          )
+        )}
       </div>
 
-      <div className="dropdown">
+      <div className="challengeTabs-dropdown">
         <select
+          className="challengeTabs-select"
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
         >
@@ -121,23 +130,70 @@ const ChallengeActivityTabs = () => {
         </select>
       </div>
 
-      <div className="challenge-list">
-        {loading ? (
-          <p className="loading-text">Loading...</p>
-        ) : filteredChallenges.length === 0 ? (
-          <p className="no-data">No challenges found.</p>
-        ) : (
-          filteredChallenges.map((challenge, index) => (
-            <div key={index} className="challenge-item">
-              <div className="challenge-title">
-                {challenge.name} - ({typeMap[challenge.type] || "Unknown"})
+      <div className="challengeTabs-list">
+        {filteredChallenges.map((item) => {
+          const userProgress = userChallenges.find(
+            (uc) => uc.challengeId === item.Id
+          );
+          const progressStatus = userProgress
+            ? userProgress.status
+            : "Not Attempted";
+          const typeName = typeMap[item.Type]?.toLowerCase() || "unknown";
+          const image = imageMap[typeName] || glass;
+
+          return (
+            <div key={item.Id} className="challengeTabs-card">
+              <img
+                src={image}
+                alt="Type"
+                className="challengeTabs-icon"
+              />
+              <div className="challengeTabs-details">
+                <h2 className="challengeTabs-title">
+                  {`${item.ChallengeName} (${item.Point} pts)`}
+                </h2>
+                <button
+                  className="challengeTabs-actionBtn"
+                  onClick={() => handleGetChallenge(item.Id, auth.currentUser.uid)}
+                >
+                  Get Challenge
+                </button>
+                <div className="challengeTabs-progress">
+                  <span className="challengeTabs-progressText">
+                    Progress: {userProgress?.progress || 0}/{item.TargetQuantity}
+                  </span>
+                  <div className="challengeTabs-progressBar">
+                    <div
+                      className="challengeTabs-progressFill"
+                      style={{
+                        width: `${
+                          Math.min(
+                            ((userProgress?.progress || 0) /
+                              item.TargetQuantity) *
+                              100,
+                            100
+                          ) || 0
+                        }%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
               </div>
-              <div className="challenge-meta">
-                Status: {challenge.status} | Points: {challenge.points}
+              <div className="challengeTabs-meta">
+                <div
+                  className={`challengeTabs-status ${progressStatus
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
+                >
+                  {progressStatus}
+                </div>
+                <div className="challengeTabs-target">
+                  Target: {item.TargetQuantity}
+                </div>
               </div>
             </div>
-          ))
-        )}
+          );
+        })}
       </div>
     </div>
   );

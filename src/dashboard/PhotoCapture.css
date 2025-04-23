@@ -167,7 +167,7 @@
   padding: 25px 20px;
   text-align: center;
   z-index: 999;
-  color: white;
+  color: black;
   animation: popIn 0.3s ease-out;
 }
 @keyframes popIn {

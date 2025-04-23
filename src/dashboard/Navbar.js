@@ -30,7 +30,7 @@ function Navbar() {
       <nav>
         <ul className="nav-list">
           <li><a href="/">Home</a></li>
-          <li><a href="//dashboard/challenges">Challenges</a></li>
+          <li><a href="/dashboard/challenges">Challenges</a></li>
           <li><a href="/dashboard/rewards">Rewards</a></li>
           <li><a href="/dashboard/HIW">How It Works</a></li>
           <li><a href="#">Contact</a></li>

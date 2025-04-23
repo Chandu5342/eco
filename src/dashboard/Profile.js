@@ -4,6 +4,7 @@ import ChallengeActivityTabs from "./ChallengeActivityTabs";
 import { auth, db } from '../Configuration';
 import { getDoc, setDoc, doc, getDocs, collection, query, where } from 'firebase/firestore';
 import Navbar from "./Navbar";
+import Loader from "../Loader";
 
 const Profile = () => {
     const [ChallengeTypeModel, setChallengeTypeModel] = useState([{
@@ -23,9 +24,9 @@ const Profile = () => {
 
     const fetchChallengeTypes = async () => {
         try {
+            // Fetching challenge types
             const challengeTypesRef = collection(db, "ChallengeType");
             const querySnapshot = await getDocs(challengeTypesRef);
-
             const challengeTypesList = [];
 
             querySnapshot.forEach((doc) => {
@@ -36,15 +37,20 @@ const Profile = () => {
                 });
             });
 
-            setChallengeTypeModel(challengeTypesList);
-            // Call other functions to fetch counts and data
+            // Now fetch counts and data
             await fetchChallengeTypesWithCounts();
             await calculateYourCounts(UserModel.Id);
-            setLoading(false); 
+
+            // Set fetched challenge types to state
+            setChallengeTypeModel(challengeTypesList);
+
+            // Finally set loading to false when all data is fetched
+            setLoading(false);
         } catch (error) {
             console.error("Error fetching challenge types:", error);
         }
     };
+
 
     const calculateYourCounts = async (userId) => {
         try {
@@ -190,16 +196,15 @@ const Profile = () => {
         }
     }, [UserModel.Id]);
 
-    // Once all data is fetched, set loading to false
     useEffect(() => {
-        if (ChallengeTypeModel.length > 0 && UserModel.Points >= 0) {
-            ///setLoading(false); // Only set loading to false when all data is loaded
+        if (ChallengeTypeModel.length > 0 && UserModel.Points >= 0 && loading) {
+           // setLoading(false); // Set loading to false only when all data is loaded
         }
-    }, [ChallengeTypeModel, UserModel]);
+    }, [ChallengeTypeModel, UserModel.Points, loading]);
 
     return (
-        <>
-        <Navbar></Navbar>
+        <div className="profile-page-container">
+            <Navbar></Navbar>
             <div className="dashboard">
                 <div className="left-panel">
                     <div className="avatar"></div>
@@ -232,13 +237,10 @@ const Profile = () => {
                         <div className="challenges">
                             <h3>Challenges</h3>
 
-                            {/* Loading spinner */}
-                            {loading && (
-                                <div className="loading-spinner">
-                                    <div className="spinner"></div>
-                                    <p>Loading...</p>
-                                </div>
-                            )}
+                                            {loading && (
+                             <Loader></Loader>
+                        )}
+
 
                             {/* Iterate through ChallengeTypeModel and display each item */}
                             {!loading && ChallengeTypeModel.map((challenge, index) => {
@@ -252,14 +254,10 @@ const Profile = () => {
                                                 style={{
                                                     width: `${progress}%`,
                                                 }}
-
-                                                
                                             ></div>
                                             {challenge.YourCount} / {challenge.AvailableCount}
                                         </div>
                                     </div>
-
-
                                 );
                             })}
                         </div>
@@ -305,7 +303,7 @@ const Profile = () => {
                     <ChallengeActivityTabs />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
