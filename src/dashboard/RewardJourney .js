@@ -9,6 +9,7 @@ import glass from '../images/glass.png';
 import plastic from '../images/bag.png';
 import Metals from '../images/metal.png';
 import Bottles from '../images/bottle.png'
+import Ewaste from '../images/ew.png'
 import Loader from "../Loader";
 
 const RewardJourney = () => {
@@ -25,7 +26,8 @@ const RewardJourney = () => {
         plastic,
         metals: Metals,
         bottles: Bottles,
-        'plastic cover': plastic, // if you want to reuse the plastic image
+        'plastic cover': plastic,
+        'Ewaste': Ewaste, // if you want to reuse the plastic image
       };
     useEffect(() => {
         const loadAll = async () => {
@@ -114,7 +116,7 @@ const RewardJourney = () => {
                 </div>
                 <div className="reward-card desktop">
                     <div className="reward-header">
-                        <h2>YOUR REWARD JOURNEY</h2>
+                        <h2>Challenges</h2>
                         <div className="reward-icon">🌱</div>
                     </div>
 
@@ -173,7 +175,7 @@ const RewardJourney = () => {
                                         ? "❌"
                                         : "🧩";
                                 //let url=teMap[typeName];
-                                //console.log(url,"url");
+                                console.log(typeName,"url");
 
                             return (
                                 <div key={item.Id} className="reward-item">

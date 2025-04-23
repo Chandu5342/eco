@@ -10,7 +10,7 @@ import { db } from '../Configuration';
 import blockhash from 'blockhash-core';
 import './PhotoCapture.css';
 import { Link } from 'react-router-dom';
-
+import confetti from 'canvas-confetti';
 const classLabels = ['Plastic Cover', 'Bottles', 'Glass', 'E-waste', 'Metals'];
 
 const PhotoCapture = ({ challengeId, userId, onComplete }) => {
@@ -212,7 +212,33 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
 
         setLoading(false);
     };
-
+    const celebrate = () => {
+        const duration = 2 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+    
+        const interval = setInterval(() => {
+            const timeLeft = animationEnd - Date.now();
+    
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+    
+            const particleCount = 50 * (timeLeft / duration);
+            confetti(Object.assign({}, defaults, {
+                particleCount,
+                origin: {
+                    x: Math.random(),
+                    y: Math.random() - 0.2
+                }
+            }));
+        }, 250);
+    };
+    
+    useEffect(() => {
+        if (showSuccess) celebrate();
+    }, [showSuccess]);
+    
     const closePopup = () => {
         setShowSuccess(false);
         setIsError(false);
@@ -282,7 +308,7 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
                     <p>✅ Photo submitted successfully!</p>
                     <p>Challenge: <strong>{challengeItem}</strong></p>
                     <p>Predicted: <strong>{predictedLabel}</strong></p>
-                    <a  href='/' className="home-btn">Home</a>
+                    <a  href='/dashboard/Challenges' className="home-btn">More Challenges</a>
                     <button onClick={closePopup} className="cancel-btn">Cancel</button>
                 </div>
             )}
@@ -298,7 +324,7 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
                         </p>
                     )}
                     <div style={{ marginTop: '12px' }}>
-                           <a  href='/' className="home-btn">Home</a>
+                           <a  href='/dashboard/Challenges' className="home-btn">More Challenges</a>
                         <button onClick={closePopup} className="try-again-btn">Try Again</button>
                         <button onClick={closePopup} className="cancel-btn">Cancel</button>
                     </div>

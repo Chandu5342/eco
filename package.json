@@ -11,6 +11,7 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
     "blockhash-core": "^0.1.0",
+    "canvas-confetti": "^1.9.3",
     "firebase": "^11.6.0",
     "framer-motion": "^12.7.4",
     "html2pdf.js": "^0.10.3",

@@ -22,7 +22,7 @@
   background-color: #065c2a;
   border-radius: 20px;
   padding: 1.5rem;
-  width: 250px;
+  width: 22rem;
   text-align: center;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
@@ -59,6 +59,33 @@
   font-weight: bold;
   color: #e5ffe9;
 }
+.profile-links {
+  margin-top: 20px;
+}
+
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.field-row label {
+  width: 100px;
+  font-weight: bold;
+}
+
+.field-row .dotted {
+  flex: 1;
+  border-bottom: 1px dashed #aaa;
+  padding-left: 10px;
+}
+
+.field-row input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
 .icon-info {
   display: flex;
@@ -73,6 +100,53 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+.profile-form {
+  max-width: 400px;
+  margin-top: 10px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.form-row label {
+  width: 100px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.form-row .dotted {
+  flex: 1;
+  border-bottom: 1px dashed #999;
+  padding: 6px 10px;
+}
+
+.form-row input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.button-row {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.button-row button {
+  padding: 6px 16px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-row button:hover {
+  background-color: #45a049;
 }
 
 .top-section {

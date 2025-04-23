@@ -84,18 +84,73 @@
   }
   
   .success-popup {
-    position: absolute;
-    top: 10%;
+    position: fixed;
+    top: 31%;
     left: 50%;
-    transform: translateX(-50%);
-    background-color: #4CAF50;
+    transform: translate(-50%, -50%);
+    background: #4CAF50;
     color: white;
-    padding: 12px 20px;
-    border-radius: 10px;
+    padding: 20px 25px;
+    border-radius: 16px;
     font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    z-index: 10;
-  }
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    text-align: center;
+    animation: popIn 0.3s ease-out, bounceIn 0.8s ease-out;
+}
+
+.success-popup p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* Adding sparkle effect inside the popup */
+.success-popup::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;base64,...') repeat;
+    animation: sparkle 1s infinite;
+    z-index: 1;
+}
+
+/* Adding glow effect around the popup */
+.success-popup {
+    box-shadow: 0 0 20px 10px rgba(76, 175, 80, 0.5); /* Green glowing effect */
+    transform: scale(1) translateY(0);
+}
+
+/* Buttons Styling */
+.home-btn,
+.try-again-btn,
+.cancel-btn {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+.home-btn:hover {
+    background-color: #007bff;
+}
+.try-again-btn:hover {
+    background-color: #28a745;
+}
+.cancel-btn:hover {
+    background-color: #dc3545;
+}
+
+/* Optional: Add sparkle animation effect on success message text */
+.success-popup p:nth-child(1) {
+    animation: sparkle 1.5s infinite;
+}
   .qr-image-preview {
     position: absolute;
     top: 63%;
@@ -219,4 +274,32 @@
   margin-bottom: 15px;
   box-shadow: 2px 2px 6px #000;
   transition: transform 0.2s ease, background-color 0.2s ease;
+}
+@keyframes sparkle {
+  0% {
+      opacity: 0;
+      transform: scale(0.5);
+  }
+  50% {
+      opacity: 1;
+      transform: scale(1.2);
+  }
+  100% {
+      opacity: 0;
+      transform: scale(0.5);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+      transform: scale(0.5) translateY(-30px);
+      opacity: 0;
+  }
+  50% {
+      transform: scale(1.05) translateY(10px);
+      opacity: 1;
+  }
+  100% {
+      transform: scale(1) translateY(0);
+  }
 }

@@ -15,11 +15,16 @@ const Profile = () => {
     }]);
     const [UserModel, setUserModel] = useState({
         Id: "0",
-        UserName: "",
+        userName: "",
         email: "",
+        Phno:"",
+        Address:"",
         Points: 0,
         Role: "no", // Initially set to "no"
     });
+
+    const [isEditing, setIsEditing] = useState(false);
+
     const [loading, setLoading] = useState(true); // Loading state for the entire data fetch
 
     const fetchChallengeTypes = async () => {
@@ -161,8 +166,10 @@ const Profile = () => {
                 const userData = userDoc.data();
                 setUserModel({
                     Id: userId,
-                    UserName: userData.username,
+                    username: userData.username,
                     email: userData.email,
+                    Phno:userData.Phno,
+                    Address:userData.Address,
                     Role: userData.Role || "no",
                     Points: userData.Points || 0,
                 });
@@ -186,6 +193,21 @@ const Profile = () => {
         });
     };
 
+
+    
+    const handleSave = async () => {
+        try {
+        
+            await setDoc(doc(db, "User", UserModel.Id), {
+               ...UserModel
+             });
+    
+            setIsEditing(false);
+            fetchUserData();
+        } catch (error) {
+            console.error("Error saving user data:", error);
+        }
+    };
     useEffect(() => {
         fetchUserData();
     }, []);
@@ -208,7 +230,7 @@ const Profile = () => {
             <div className="dashboard">
                 <div className="left-panel">
                     <div className="avatar"></div>
-                    <h2>{UserModel.UserName}</h2>
+                    <h2>{UserModel.username}</h2>
                     <p className="email">{UserModel.email}</p>
 
                     <div className="medal-section">
@@ -217,10 +239,56 @@ const Profile = () => {
                     </div>
 
                     <div className="profile-links">
-                        <p>PROFILE</p>
-                        <span>{UserModel.UserName}</span><br></br>
-                        <span>{UserModel.email}</span>
-                    </div>
+    <p>PROFILE</p>
+    <div className="profile-form">
+        {isEditing ? (
+            <>
+                <div className="form-row">
+                    <label>Name:</label>
+                    <input type="text" value={UserModel.username} onChange={(e) => setUserModel({...UserModel,username:e.target.value})} />
+                </div>
+                <div className="form-row">
+                    <label>Email:</label>
+                    <input type="email" value={UserModel.email} onChange={(e) => setUserModel({...UserModel,email:e.target.value})} />
+                </div>
+                <div className="form-row">
+                    <label>Phno:</label>
+                    <input type="text" value={UserModel.Phno} onChange={(e) => setUserModel({...UserModel,Phno:e.target.value})} />
+                </div>
+                <div className="form-row">
+                    <label>Address:</label>
+                    <input type="text" value={UserModel.Address} onChange={(e) => setUserModel({...UserModel,Address:e.target.value})} />
+                </div>
+                <div className="button-row">
+                    <button onClick={handleSave}>Save</button>
+                </div>
+            </>
+        ) : (
+            <>
+                <div className="form-row">
+                    <label>Name:</label>
+                    <span className="dotted">{UserModel.username}</span>
+                </div>
+                <div className="form-row">
+                    <label>Email:</label>
+                    <span className="dotted">{UserModel.email}</span>
+                </div>
+                <div className="form-row">
+                    <label>Phno:</label>
+                    <span className="dotted">{UserModel.Phno || 'Clk on Edit'}</span>
+                </div>
+                <div className="form-row">
+                    <label>Address:</label>
+                    <span className="dotted">{UserModel.Address || 'Clk on Edit'}</span>
+                </div>
+                <div className="button-row">
+                    <button onClick={() => setIsEditing(true)}>Edit</button>
+                </div>
+            </>
+        )}
+    </div>
+</div>
+
 
                     <div className="icon-info">
                         <div>
