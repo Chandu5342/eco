@@ -20,7 +20,7 @@ const RewardJourney = () => {
     const [teMap, setteMap] = useState({});
     const [activeTab, setActiveTab] = useState("All");
     const [selectedType, setSelectedType] = useState("All");
-     let [UserDet,SetUserDet]=useState(null);
+
     const navigate = useNavigate();  
     const imageMap = {
         glass,
@@ -35,7 +35,7 @@ const RewardJourney = () => {
             await fetchChallengeTypes();
             await fetchChallenges();
             await fetchUserChallenges();
-            await fetchUserData();
+     
         };
         loadAll();
     }, []);
@@ -91,24 +91,7 @@ const RewardJourney = () => {
         }
         setLoading(false);
     };
-     const fetchUserData = async()=>{
-          auth.onAuthStateChanged(async(user)=>{
-              console.log(user);
-              if(user!=null)
-              {
-                const userdoc=doc(db,"User",user.uid);
-                const getuser=await getDoc(userdoc);
-                if(getuser)
-                {
-                   SetUserDet({...getuser.data(),id:user.uid});  
-                  
-                }
-              }
-              else{
-                console.log("User is not Loggdin")
-              }
-          });
-    };
+     
     const filteredChallenges = ChallengeList.filter((challenge) => {
         const userProgress = userChallenges.find(
             (uc) => uc.challengeId === challenge.Id
@@ -128,13 +111,13 @@ const RewardJourney = () => {
             <Navbar />
             
             <div className="reward-container">
-                 {UserDet.role === "yes" && (
+               
               <div className="role-mode-container">
                     <Link to="/Rolemodel/Rolemode">
                         <button className="role-mode-btn">Role Mode</button>
                     </Link>
                 </div>
-            )}
+           
                 <div className="reward-card desktop">
                     <div className="reward-header">
                         <h2>Challenges</h2>
