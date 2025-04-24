@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./RewardJourney.css";
 import Navbar from "./Navbar";
 import { db, auth } from "../Configuration";
-import { getDocs, query, collection, where } from "firebase/firestore";
+import { getDocs,doc,getDoc, query, collection, where } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { Link,useNavigate } from 'react-router-dom'
+import { Await, Link,useNavigate } from 'react-router-dom'
 import glass from '../images/glass.png';
 import plastic from '../images/bag.png';
 import Metals from '../images/metal.png';
@@ -30,12 +30,22 @@ const RewardJourney = () => {
         'plastic cover': plastic,
         'Ewaste': Ewaste, // if you want to reuse the plastic image
       };
+       const [UserModel, setUserModel] = useState({
+              Id: "0",
+              userName: "",
+              email: "",
+              Phno:"",
+              Address:"",
+              Points: 0,
+              Role:""
+             
+          });
     useEffect(() => {
         const loadAll = async () => {
             await fetchChallengeTypes();
             await fetchChallenges();
             await fetchUserChallenges();
-     
+            await fetchUserDetails();
         };
         loadAll();
     }, []);
@@ -77,6 +87,8 @@ const RewardJourney = () => {
     const fetchUserChallenges = async () => {
         try {
             const userId = auth.currentUser.uid;
+
+            
             const userChallengeQuery = query(
                 collection(db, "UserRewards"),
                 where("userId", "==", userId)
@@ -106,17 +118,45 @@ const RewardJourney = () => {
     const handleGetChallenge = (cid,uid) => {
         navigate(`/dashboard/Verification/${cid}/${uid}`);  // Redirects to the verification page with challengeId and userId
       };
+
+     const fetchUserDetails = async () => {
+            try {
+                const userDocRef = doc(db, "User", auth.currentUser.uid);
+                const userDoc = await getDoc(userDocRef);
+    
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    setUserModel({
+                        Id: auth.currentUser.uid,
+                        username: userData.username,
+                        email: userData.email,
+                        Phno:userData.Phno,
+                        Address:userData.Address,
+                        Role: userData.Role || "no",
+                        Points: userData.Points || 0,
+                    });
+    
+                   
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.error("Error fetching user data: ", error);
+            }
+        };
     return (
         <>
             <Navbar />
             
             <div className="reward-container">
-               
-              <div className="role-mode-container">
-                    <Link to="/Rolemodel/Rolemode">
-                        <button className="role-mode-btn">Role Mode</button>
-                    </Link>
-                </div>
+            {UserModel.Role === "yes" && (
+                 <div className="role-mode-container">
+                 <Link to="/Rolemodel/Rolemode">
+                     <button className="role-mode-btn">Role Mode</button>
+                 </Link>
+             </div>
+            )}
+            
            
                 <div className="reward-card desktop">
                     <div className="reward-header">

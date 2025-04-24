@@ -198,7 +198,7 @@ const PhotoCapture = ({ challengeId, userId, onComplete }) => {
                 challengeId,
                 status,
                 progress: newProgress,
-                pointsAwarded: (newProgress / parseInt(challengeModel.targetQuantity)) * parseInt(challengeModel.points),
+                pointsAwarded: newProgress >=parseInt(challengeModel.targetQuantity) ? parseInt(challengeModel.points) : 0,
                 dateStarted: userRewardData ? userRewardData.dateStarted : new Date().toISOString(),
                 dateCompleted: status === 'completed' ? new Date().toISOString() : null,
             });

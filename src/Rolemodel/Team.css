@@ -1,0 +1,20 @@
+.popup-form {
+    background: white;
+    padding: 20px;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}

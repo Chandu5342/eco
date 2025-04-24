@@ -20,7 +20,7 @@ const Profile = () => {
         Phno:"",
         Address:"",
         Points: 0,
-        Role: "no", // Initially set to "no"
+      
     });
 
     const [isEditing, setIsEditing] = useState(false);
