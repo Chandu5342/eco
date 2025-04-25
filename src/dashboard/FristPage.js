@@ -121,51 +121,52 @@ function FristPage() {
         </p>
     </footer> */}
     <footer className="eco-footer">
-  <div className="footer-container">
-    <div className="footer-logo">
-      <h2>EcoRecyclr</h2>
-      <p>
-        GreenWorks, 22B Green Lane, EcoBlock 1, Sustainability Street, Bengaluru, India 560001
-      </p>
-      <p>support@ecorecyclr.com</p>
-      <p>+91 98765 43210</p>
-      <div className="social-icons">
-        <a href="#"><i className="fab fa-youtube"></i></a>
-        <a href="#"><i className="fab fa-facebook-f"></i></a>
-        <a href="#"><i className="fab fa-instagram"></i></a>
-        <a href="#"><i className="fab fa-linkedin-in"></i></a>
-      </div>
-    </div>
-    <div className="footer-links">
-      <div>
-        <h4>Features</h4>
-        <ul>
-          <li><a href="#">QR Verification</a></li>
-          <li><a href="#">Eco Points</a></li>
-          <li><a href="#">Gamified Challenges</a></li>
-          <li><a href="#">Mobile App</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Community</h4>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Eco Stories</a></li>
-          <li><a href="#">Volunteer</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Support</h4>
-        <ul>
-          <li><a href="#">FAQs</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Terms</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
+    <div className="footer-container">
+  <div className="footer-logo">
+    <h2>EcoRecyclr</h2>
+    <p>
+      GreenWorks, 22B Green Lane, EcoBlock 1, Duvvada, Visakhapatnam, India 530046
+    </p>
+    <p>Sudheeshna2808@gmail.com</p>
+    <p>+91 8008451943</p>
+    <div className="social-icons">
+      <a href="#"><i className="fab fa-youtube"></i></a>
+      <a href="#"><i className="fab fa-facebook-f"></i></a>
+      <a href="#"><i className="fab fa-instagram"></i></a>
+      <a href="#"><i className="fab fa-linkedin-in"></i></a>
     </div>
   </div>
+  <div className="footer-links">
+    <div>
+      <h4>Recycling Features</h4>
+      <ul>
+        <li><a href="#">QR Code Verification</a></li>
+        <li><a href="#">Eco Rewards Points</a></li>
+        <li><a href="#">Recycling Challenges</a></li>
+        <li><a href="#">Sustainable Tips</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Community Engagement</h4>
+      <ul>
+        <li><a href="#">About EcoRecyclr</a></li>
+        <li><a href="#">Eco Success Stories</a></li>
+        <li><a href="#">Volunteer with Us</a></li>
+        <li><a href="#">Join Our Green Community</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Support & Resources</h4>
+      <ul>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
   <div className="footer-bottom">
     <p>&copy; 2025 EcoRecyclr Inc. All rights reserved.</p>
   </div>
