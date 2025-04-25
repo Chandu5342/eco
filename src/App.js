@@ -26,6 +26,7 @@ import Rewards from './dashboard/Rewards';
 import RewardJourney from './dashboard/RewardJourney ';
 
 import React, { useEffect, useState } from 'react';
+import Contact from './dashboard/Contact';
 function App() { 
   let [user, setUser] = useState(null);
   useEffect(() => {
@@ -45,7 +46,8 @@ function App() {
           <Route path="/dashboard/rewards" element={<Rewards />} />
           <Route path="/a" element={<VerifyChallenge />} />
           <Route path="/dashboard/Verification/:challengeId/:userId" element={<VerificationP />} />
-       
+          <Route path="/dashboard/contact" element={<Contact />} />
+
           {/* <Route path="/dashboard/Challenges" element={<Challenges />} /> */}
           <Route path="/Rolemodel/Rolemode" element={<Rolemode></Rolemode>} />
           <Route path="/dashboard/VerificationP" element={<VerificationP />} />
