@@ -349,4 +349,54 @@ footer a{
     font-size: 14px;
     color: #aaa;
   }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #1e1e1e;
+    color: white;
+    flex-wrap: wrap;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .app-logo {
+    height: 40px;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links li a {
+   color: black;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adjust gap between button and logo */
+  }
+  
+
+  
+  .college-logo {
+    height: 35px;
+    border-radius: 50%;
+  }
+  
   

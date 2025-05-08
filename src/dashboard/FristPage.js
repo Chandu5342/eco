@@ -7,19 +7,34 @@ import Hurray from "../images/hurray.png"
 import Footer from "./Footer"
 import Walk from "../images/walk2.gif"
 
+import appLogo from '../images/applog1.png';        // ✅ replace with your logo file
+import collegeLogo from '../images/vig.png'; // ✅ replace with your college logo
+
 function FristPage() {
    return(
     <>
-        <nav className="navbar">
-        <div className="logo">Ecoryclr</div>
-        <ul className="nav-links">
-            <li><a href="#about">About Ecoryclr</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#section5">Contact</a></li>
-      
-        </ul>
-        <a href="dashboard/LandingPage"><button className="join-btn">Join Now</button></a>
-    </nav>
+   <nav className="navbar">
+  <div className="logo-container">
+    <img src={appLogo} alt="App Logo" className="app-logo" />
+    <div className="logo">EcoRecyclr</div>
+  </div>
+
+  <ul className="nav-links">
+    <li><a href="#about">About Ecoryclr</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="/dashboard/contact">Contact</a></li>
+  </ul>
+
+  {/* Wrap Join Now and College Logo together */}
+  <div className="nav-right">
+    <a href="dashboard/LandingPage">
+      <button className="join-btn">Join Now</button>
+    </a>
+    <img src={collegeLogo} alt="College Logo" className="college-logo" />
+  </div>
+</nav>
+
+
     
     <header className="hero">
         
