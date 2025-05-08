@@ -84,7 +84,7 @@ const Rewards = () => {
     <>
     <Navbar></Navbar>
     <div className="rewards-page">
-      <div className="containerss">
+      <div className="containersss">
         <div className="header">
           <h1>Rewards Store</h1>
         </div>
@@ -94,7 +94,7 @@ const Rewards = () => {
         <div className="grid-wrapper">
           <div className="grid">
             {rewardsData.map((reward, index) => (
-              <div className="card" key={index}>
+              <div className="cards" key={index}>
                 <img src={reward.img} alt={reward.title} />
                 <h3>
                   {reward.title}

@@ -28,7 +28,7 @@ const RewardJourney = () => {
         metals: Metals,
         bottles: Bottles,
         'plastic cover': plastic,
-        'Ewaste': Ewaste, // if you want to reuse the plastic image
+        ewaste : Ewaste, // if you want to reuse the plastic image
       };
        const [UserModel, setUserModel] = useState({
               Id: "0",
@@ -220,6 +220,7 @@ const RewardJourney = () => {
                                         : "🧩";
                                 //let url=teMap[typeName];
                                 console.log(typeName,"url");
+                               // console.log(typeName,"url");
 
                             return (
                                 <div key={item.Id} className="reward-item">

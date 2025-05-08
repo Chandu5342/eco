@@ -145,6 +145,8 @@ margin-bottom: 30px;
   
   .emoji {
     font-size: 24px;
+    width: 6rem;
+    height: 6rem;
   }
   
   .reward-details {

@@ -3,35 +3,35 @@ import "./Contact.css"; // Make sure to import the CSS file
 
 const teamMembers = [
   {
-    name: "Kuriti Mahita",
+    name: "K Mahita",
     roll: "23L31A05EE3",
     email: "mahita.kuriti@gmail.com",
     phone: "9014957124",
     linkedin: "https://www.linkedin.com/in/mahita-kuriti-6084012b7"
   },
   {
-    name: "Machineni Krishna Chaitanya",
+    name: "M Krishna Chaitanya",
     roll: "23L31A05E9",
     email: "mkrishnac931@gmail.com",
     phone: "9100363368",
     linkedin: "https://www.linkedin.com/in/m-krishna-chaitanya-b19441332"
   },
   {
-    name: "Mamidi Kusuma Priya",
+    name: "M Kusuma Priya",
     roll: "23L31A05F5",
     email: "mamidikusumapriya@gmail.com",
     phone: "6301359971",
     linkedin: "https://www.linkedin.com/in/mamidi-kusuma-priya-039429358"
   },
   {
-    name: "Marthi Sharmila",
+    name: "M Sharmila",
     roll: "23L31A05F7",
     email: "marthisharmila555@gmail.com",
     phone: "8008451943",
     linkedin: "https://www.linkedin.com/in/sharmila-marthi-09507b35a"
   },
   {
-    name: "Matta Sudheeshna",
+    name: "M Sudheeshna",
     roll: "23L31A05F9",
     email: "sudheehoney2806@gmail.com",
     phone: "8919366234",
