@@ -36,6 +36,7 @@ function Navbar() {
           <li><a href="/dashboard/rewards">Rewards</a></li>
           <li><a href="/dashboard/HIW">How It Works</a></li>
           <li><a href="/dashboard/contact">Contact</a></li>
+          <li><a href="/dashboard/contact">Contact</a></li>
 
           <div className="profile-dropdown">
             <FaUserCircle size={28} onClick={toggleDropdown} className="profile-icon" />
