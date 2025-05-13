@@ -219,8 +219,8 @@ const RewardJourney = () => {
                                         ? "❌"
                                         : "🧩";
                                 //let url=teMap[typeName];
-                                console.log(typeName,"url");
-                               // console.log(typeName,"url");
+                            
+                              
 
                             return (
                                 <div key={item.Id} className="reward-item">
@@ -231,7 +231,8 @@ const RewardJourney = () => {
                                         {/* <div className="title">{item.ChallengeName}</div> */}
                                         <button className="points" onClick={()=>{handleGetChallenge(item.Id,auth.currentUser.uid)}} >Get Challenge </button>
                                        
-                                        {progressStatus === "in-progress" && userProgress ? (
+                                        {(progressStatus != "Not Attempted" ) && userProgress ? (
+                                            
                                             <>
                                                 <div className="date">
                                                     Progress: {userProgress.progress}/{item.TargetQuantity}
@@ -241,7 +242,7 @@ const RewardJourney = () => {
                                                         className="progress-bar-fill"
                                                         style={{
                                                             width: `${Math.min(
-                                                                (userProgress.progress / item.TargetQuantity) * 100,
+                                                                (userProgress.progress/ item.TargetQuantity)*100,
                                                                 100
                                                             )}%`,
                                                         }}
