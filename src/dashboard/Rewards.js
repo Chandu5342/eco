@@ -1,9 +1,13 @@
-import React from "react";
+
+import React, { useEffect, useState } from "react";
+
 import "./Rewards.css"; // Make sure to import the CSS
 import Travel from '../images/travel.png'
 import Tree from '../images/tree.png'
 import Pic from '../images/pic.png'
 import Movie from '../images/movie.png'
+import { auth, db } from '../Configuration';
+import { getDoc, setDoc, doc, getDocs, collection, query, where } from 'firebase/firestore';
 import tendis from '../images/tendis.png'
 import straw from '../images/straw.png'
 import gift from '../images/gift.png'
@@ -18,7 +22,7 @@ const imageMap = {
 };
 const rewardsData = [
   {
-    img:sticker,
+    img: sticker,
     title: "Eco Sticker Pack",
     points: "50 pts",
   },
@@ -33,7 +37,7 @@ const rewardsData = [
     points: "70 pts",
   },
   {
-    img:note,
+    img: note,
     title: "Recycled Paper Notebook",
     points: "150 pts",
   },
@@ -53,7 +57,7 @@ const rewardsData = [
     points: "1000 pts",
   },
   {
-    img:  Pic,
+    img: Pic,
     title: "Eco Branded Water Bottle",
     points: "500 pts",
   },
@@ -73,39 +77,109 @@ const rewardsData = [
     points: "1000 pts",
   },
   {
-    img:gift,
+    img: gift,
     title: "₹500 Gift Card (Amazon, Myntra, Swiggy)",
     points: "10000 pts",
   },
 ];
 
 const Rewards = () => {
+  const [UserModel, setUserModel] = useState({
+    Id: "0",
+    userName: "",
+    email: "",
+    Phno: "",
+    Address: "",
+    Points: 0,
+
+  });
+  const fetchUserDetails = async (userId) => {
+    try {
+      const userDocRef = doc(db, "User", userId);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUserModel({
+          Id: userId,
+          username: userData.username,
+          email: userData.email,
+          Phno: userData.Phno,
+          Address: userData.Address,
+          Role: userData.Role || "no",
+          Points: userData.Points || 0,
+        });
+
+        await calculateUserPoints(userId);
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.error("Error fetching user data: ", error);
+    }
+  };
+  const calculateUserPoints = async (userId) => {
+    try {
+      const userRewardsRef = collection(db, "UserRewards");
+      const q = query(userRewardsRef, where("userId", "==", userId));
+      const querySnapshot = await getDocs(q);
+
+      let totalPoints = 0;
+
+      querySnapshot.forEach((doc) => {
+        const rewardData = doc.data();
+        if (rewardData.pointsAwarded) {
+          totalPoints += rewardData.pointsAwarded;
+        }
+      });
+
+      setUserModel((prevState) => ({
+        ...prevState,
+        Points: totalPoints
+      }));
+    } catch (error) {
+      console.error("Error fetching user rewards:", error);
+    }
+  };
+  const fetchUserData = async () => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        fetchUserDetails(user.uid);
+      } else {
+        console.log("No user logged in.");
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
   return (
     <>
-    <Navbar></Navbar>
-    <div className="rewards-page">
-      <div className="containersss">
-        <div className="header">
-          <h1>Rewards Store</h1>
-        </div>
+      <Navbar></Navbar>
+      <div className="rewards-page">
+        <div className="containersss">
+          <div className="header">
+            <h1>Rewards Store</h1>
+          </div>
 
-        <div className="points">Points: 105</div>
+          <div className="points">Points: {UserModel.Points}</div>
 
-        <div className="grid-wrapper">
-          <div className="grid">
-            {rewardsData.map((reward, index) => (
-              <div className="cards" key={index}>
-                <img src={reward.img} alt={reward.title} />
-                <h3>
-                  {reward.title}
-                  <strong>{reward.points}</strong>
-                </h3>
-              </div>
-            ))}
+          <div className="grid-wrapper">
+            <div className="grid">
+              {rewardsData.map((reward, index) => (
+                <div className="cards" key={index}>
+                  <img src={reward.img} alt={reward.title} />
+                  <h3>
+                    {reward.title}
+                    <strong>{reward.points}</strong>
+                  </h3>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
