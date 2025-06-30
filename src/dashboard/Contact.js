@@ -9,7 +9,7 @@ const teamMembers = [
 function Contact() {
     return (
         <div className="contact-container">
-            <h1 className="heading">Our Team</h1>
+       
             <div className="team-cards">
                 {teamMembers.map((member, index) => (
                     <div key={index} className="card">
