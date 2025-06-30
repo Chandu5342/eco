@@ -45,5 +45,5 @@ Users scan QR codes at registered bins, verify their GPS location, and complete 
 **Chandu Karri**  
 Final-year B.Tech student | Full-stack Developer (MERN & .NET)  
 📧 karrichandu309@gmail.com  
-🔗 [LinkedIn](www.linkedin.com/in/chandu-karri-8b583a2b4) _(replace if available)_
+🔗 [LinkedIn](www.linkedin.com/in/chandu-karri-8b583a2b4) 
 
