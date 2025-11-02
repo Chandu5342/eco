@@ -42,6 +42,8 @@ function VerifyRecycling() {
           setUserLocation({ lat, lon }); // Store latitude and longitude
         },
         () => {
+
+          
           toast.error("Failed to get user location.");
         }
       );

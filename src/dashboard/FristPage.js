@@ -142,8 +142,8 @@ function FristPage() {
     <p>
       GreenWorks, 22B Green Lane, EcoBlock 1, Duvvada, Visakhapatnam, India 530046
     </p>
-    <p>Sudheeshna2808@gmail.com</p>
-    <p>+91 8008451943</p>
+    <p>karrichandu309@gmail.com</p>
+    <p>+91 9666570279</p>
     <div className="social-icons">
       <a href="#"><i className="fab fa-youtube"></i></a>
       <a href="#"><i className="fab fa-facebook-f"></i></a>
